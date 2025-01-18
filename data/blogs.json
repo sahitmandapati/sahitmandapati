@@ -1,0 +1,22 @@
+{
+  "blogs": [
+    {
+      "id": 1,
+      "title": "Optimizing React Performance",
+      "summary": "Deep dive into React performance optimization techniques",
+      "date": "2024-03-15",
+      "tags": ["React", "Performance", "Web Development"],
+      "url": "https://blog.example.com/react-performance",
+      "readTime": "8 min"
+    },
+    {
+      "id": 2,
+      "title": "Building Scalable Microservices",
+      "summary": "A comprehensive guide to designing and implementing microservices",
+      "date": "2024-02-28",
+      "tags": ["Microservices", "Architecture", "Backend"],
+      "url": "https://blog.example.com/microservices",
+      "readTime": "12 min"
+    }
+  ]
+}

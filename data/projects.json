@@ -1,0 +1,24 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "AI-Powered Task Manager",
+      "description": "Smart task management system using machine learning for priority optimization",
+      "image": "https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80",
+      "technologies": ["React", "TensorFlow.js", "Node.js"],
+      "github": "https://github.com/username/ai-task-manager",
+      "demo": "https://ai-task-manager.demo",
+      "featured": true
+    },
+    {
+      "id": 2,
+      "title": "Real-time Analytics Dashboard",
+      "description": "Interactive dashboard for real-time data visualization and analysis",
+      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      "technologies": ["Next.js", "D3.js", "Firebase"],
+      "github": "https://github.com/username/analytics-dashboard",
+      "demo": "https://analytics-dashboard.demo",
+      "featured": true
+    }
+  ]
+}

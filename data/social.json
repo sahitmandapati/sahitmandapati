@@ -1,0 +1,9 @@
+{
+  "social": {
+    "github": "https://github.com/username",
+    "linkedin": "https://linkedin.com/in/username",
+    "twitter": "https://twitter.com/username",
+    "email": "contact@example.com"
+  },
+  "resume": "https://example.com/resume.pdf"
+}

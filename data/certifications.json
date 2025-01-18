@@ -1,0 +1,37 @@
+{
+    "certifications": [
+      {
+        "id": 1,
+        "name": "AWS Certified Solutions Architect - Professional",
+        "issuer": "Amazon Web Services",
+        "issueDate": "2023",
+        "expiryDate": "2026",
+        "credentialId": "AWS-PSA-123456",
+        "credentialUrl": "https://aws.amazon.com/verification",
+        "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80",
+        "skills": ["Cloud Architecture", "AWS Services", "System Design"]
+      },
+      {
+        "id": 2,
+        "name": "Google Cloud Professional Cloud Architect",
+        "issuer": "Google Cloud",
+        "issueDate": "2023",
+        "expiryDate": "2025",
+        "credentialId": "GCP-PCA-789012",
+        "credentialUrl": "https://google.com/verification",
+        "image": "https://images.unsplash.com/photo-1484417894907-623942c8ee29?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80",
+        "skills": ["Cloud Infrastructure", "GCP Services", "Security"]
+      },
+      {
+        "id": 3,
+        "name": "Microsoft Certified: Azure Solutions Architect Expert",
+        "issuer": "Microsoft",
+        "issueDate": "2022",
+        "expiryDate": "2024",
+        "credentialId": "MSFT-AZ-345678",
+        "credentialUrl": "https://microsoft.com/verification",
+        "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80",
+        "skills": ["Azure Cloud", "Cloud Solutions", "Enterprise Architecture"]
+      }
+    ]
+  }
