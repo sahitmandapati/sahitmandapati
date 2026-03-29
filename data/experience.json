@@ -2,59 +2,43 @@
   "workExperience": [
     {
       "id": 1,
-      "company": "Tech Innovations Inc.",
-      "position": "Senior Software Engineer",
-      "period": "2020 - Present",
-      "location": "San Francisco, CA",
-      "description": "Led development of cloud-native applications using microservices architecture",
+      "company": "Technovert",
+      "position": "Software Engineer",
+      "period": "November 2022 – Present",
+      "location": "Hyderabad, India",
+      "description": "Developing scalable insurance solutions with focus on quote generation, purchase flows, and secure payment integrations.",
       "achievements": [
-        "Reduced system latency by 40% through optimization of database queries",
-        "Mentored junior developers and conducted code reviews",
-        "Implemented CI/CD pipelines reducing deployment time by 60%"
+        "Delivered an end-to-end quote generation and purchase system, providing a seamless user journey",
+        "Implemented client-side validation on dynamic forms and improved data accuracy by 15%",
+        "Developed a document generation feature, improving document customization and adaptability by 30%",
+        "Collaborated with cross-functional teams, aligning development efforts to deliver user-focused insurance solutions",
+        "Implemented Azure Service Bus in existing microservice architecture"
       ],
-      "technologies": ["React", "Node.js", "AWS", "Docker", "MongoDB"]
+      "technologies": ["C#", ".NET 8", "React", "JavaScript", "HTML", "CSS", "Material-UI", "Azure Service Bus"]
     },
     {
       "id": 2,
-      "company": "Digital Solutions Ltd",
-      "position": "Full Stack Developer",
-      "period": "2018 - 2020",
-      "location": "Boston, MA",
-      "description": "Developed and maintained enterprise-level web applications",
+      "company": "Phenom",
+      "position": "Software Engineer",
+      "period": "June 2021 – July 2022",
+      "location": "Hyderabad, India",
+      "description": "Built responsive job portal solutions and recommendation systems.",
       "achievements": [
-        "Built responsive web applications serving 100k+ daily users",
-        "Improved application performance by 35%",
-        "Implemented automated testing reducing bugs by 45%"
+        "Standardized skills and job ontologies, resulting in a unified recommendation framework with 40% improved precision",
+        "Engineered a responsive front end in React, contributing to 50% reduction in load times",
+        "Improved accuracy of job matching through optimized algorithms and user interface design"
       ],
-      "technologies": ["Vue.js", "Python", "PostgreSQL", "Redis"]
+      "technologies": ["React", "JavaScript", "HTML", "CSS", "Material-UI"]
     }
-  ],
-  "freelanceExperience": [
-    {
-      "id": 1,
-      "client": "E-commerce Startup",
-      "project": "Custom Shopping Platform",
-      "period": "2023",
-      "description": "Designed and developed a full-featured e-commerce platform with advanced analytics",
+  ]
+},
+      "description": "Built comprehensive patient management system with telemedicine capabilities",
       "achievements": [
-        "Implemented secure payment processing system",
-        "Integrated real-time inventory management",
-        "Achieved 99.9% uptime with optimized cloud infrastructure"
+        "Improved patient scheduling efficiency by 50%",
+        "Implemented HIPAA-compliant data handling",
+        "Reduced administrative overhead by 30%"
       ],
-      "technologies": ["Next.js", "Stripe", "PostgreSQL", "AWS"]
-    },
-    {
-      "id": 2,
-      "client": "Healthcare Provider",
-      "project": "Patient Management System",
-      "period": "2022",
-      "description": "Built a HIPAA-compliant patient management and scheduling system",
-      "achievements": [
-        "Reduced appointment scheduling time by 60%",
-        "Implemented secure data encryption protocols",
-        "Integrated with existing EMR systems"
-      ],
-      "technologies": ["React", "Node.js", "MongoDB", "Docker"]
+      "technologies": ["React", "Node.js", "PostgreSQL", "Docker"]
     }
   ]
 }

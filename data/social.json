@@ -1,9 +1,11 @@
 {
   "social": {
-    "github": "https://github.com/username",
-    "linkedin": "https://linkedin.com/in/username",
-    "twitter": "https://twitter.com/username",
-    "email": "contact@example.com"
-  },
-  "resume": "https://example.com/resume.pdf"
+    "github": "https://github.com/sahitmandapati",
+    "linkedin": "https://www.linkedin.com/in/sahit-mandapati/",
+    "x": "https://x.com/sahitmandapati",
+    "email": "sahitdev0@gmail.com",
+    "phone": "7735210829",
+    "location": "Hyderabad, India",
+    "favicon": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>"
+  }
 }

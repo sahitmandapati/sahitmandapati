@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahit Mandapati - Software Engineer</title>
+    <meta name="description" content="Senior Software Engineer specializing in web development and architecture">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/data/favicon.svg" type="image/svg+xml">
+    
+    <!-- Preconnect to external resources for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+
+    
+    <!-- AOS Animation Library - Defer for better performance -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles/themes.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body class="bg-background text-foreground transition-colors duration-300">
+    <!-- Theme Toggle -->
+    <div class="theme-toggle-container">
+        <div class="theme-toggle" id="themeToggle">
+            <button class="theme-btn" id="themeBtn">
+                <span class="icon sun-icon">☀️</span>
+                <span class="icon moon-icon">🌙</span>
+                <span class="sr-only">Toggle theme</span>
+            </button>
+            
+            <div class="theme-dropdown" id="themeDropdown">
+                <button class="theme-option" data-theme="light">
+                    <span class="icon">☀️</span>
+                    Light
+                </button>
+                <button class="theme-option" data-theme="dark">
+                    <span class="icon">🌙</span>
+                    Dark
+                </button>
+                <button class="theme-option" data-theme="system">
+                    <span class="icon">💻</span>
+                    System
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navigation" id="mainNavigation">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="nav-logo">SM</span>
+            </div>
+            <div class="nav-links">
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#certifications" class="nav-link">Certifications</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="min-h-screen bg-background">
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="hero-background"></div>
+            <div class="container hero-content" data-aos="fade-up" data-aos-duration="800">
+                <h1 class="hero-title">Sahit Mandapati</h1>
+                <p class="hero-subtitle">Software Engineer</p>
+                <p class="hero-description">
+                    Building exceptional digital experiences with modern web technologies.
+                    Focused on creating scalable and performant applications.
+                </p>
+                <div class="social-links" id="socialLinks">
+                    <!-- Social links will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section bg-background">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Work Experience</h2>
+                <div class="experience-container" id="experienceContainer">
+                    <!-- Experience items will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section bg-background">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Featured Projects</h2>
+                <div class="projects-grid" id="projectsContainer">
+                    <!-- Projects will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section id="certifications" class="section bg-background">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Certifications</h2>
+                <div class="certifications-grid" id="certificationsContainer">
+                    <!-- Certifications will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section bg-background">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Get In Touch</h2>
+                <div class="contact-content" data-aos="fade-up" data-aos-delay="200">
+                    <p class="contact-description">
+                        I'm always interested in hearing about new opportunities and interesting projects.
+                    </p>
+                    <div class="contact-info" id="contactInfo">
+                        <!-- Contact info will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Loading indicator -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
