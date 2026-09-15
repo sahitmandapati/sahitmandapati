@@ -31,14 +31,4 @@
       "technologies": ["React", "JavaScript", "HTML", "CSS", "Material-UI"]
     }
   ]
-},
-      "description": "Built comprehensive patient management system with telemedicine capabilities",
-      "achievements": [
-        "Improved patient scheduling efficiency by 50%",
-        "Implemented HIPAA-compliant data handling",
-        "Reduced administrative overhead by 30%"
-      ],
-      "technologies": ["React", "Node.js", "PostgreSQL", "Docker"]
-    }
-  ]
 }

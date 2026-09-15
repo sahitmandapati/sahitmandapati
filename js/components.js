@@ -115,10 +115,10 @@ class ComponentRenderer {
     }
     
     const links = [
-      { href: social.github, icon: 'github', label: 'GitHub' },
-      { href: social.linkedin, icon: 'linkedin', label: 'LinkedIn' },
-      { href: social.x, icon: 'twitter', label: 'X' },
-      { href: `mailto:${social.email}`, icon: 'mail', label: 'Email' }
+      { href: social.github, icon: 'github', label: 'GitHub', external: true },
+      { href: social.linkedin, icon: 'linkedin', label: 'LinkedIn', external: true },
+      { href: social.x, icon: 'twitter', label: 'X', external: true },
+      { href: `mailto:${social.email}`, icon: 'mail', label: 'Email', external: false }
     ];
 
     container.innerHTML = '';
@@ -128,10 +128,15 @@ class ComponentRenderer {
       anchor.href = link.href;
       anchor.className = 'social-link';
       anchor.setAttribute('aria-label', link.label);
-      anchor.target = '_blank';
-      anchor.rel = 'noopener noreferrer';
+      if (link.external) {
+        anchor.target = '_blank';
+        anchor.rel = 'noopener noreferrer';
+      }
       
       anchor.appendChild(this.createIcon(link.icon));
+      const label = document.createElement('span');
+      label.textContent = link.label;
+      anchor.appendChild(label);
       container.appendChild(anchor);
     });
   }
@@ -278,6 +283,32 @@ class ComponentRenderer {
     });
   }
 
+  renderBlogs() {
+    const container = document.getElementById('blogsContainer');
+    if (!container) return;
+
+    container.innerHTML = this.dataManager.getBlogs().map((blog, index) => `
+      <article class="writing-card" data-aos="fade-up" data-aos-delay="${index * 120}">
+        <div class="writing-card-top"><span>${blog.category}</span><span>${blog.date}</span></div>
+        <h3>${blog.title}</h3>
+        <p>${blog.description}</p>
+        <a class="text-link" href="${blog.url}" target="_blank" rel="noopener noreferrer">Read the notes <span>↗</span></a>
+      </article>
+    `).join('');
+  }
+
+  renderBooks() {
+    const container = document.getElementById('booksContainer');
+    if (!container) return;
+
+    container.innerHTML = this.dataManager.getBooks().map((book, index) => `
+      <a class="book-card" href="${book.url}" target="_blank" rel="noopener noreferrer" data-aos="fade-up" data-aos-delay="${index * 100}">
+        <div class="book-spine">0${index + 1}</div>
+        <div class="book-content"><p class="book-status">${book.status}</p><h3>${book.title}</h3><p class="book-author">${book.author}</p><p class="book-description">${book.description}</p><span class="text-link">View book <span>↗</span></span></div>
+      </a>
+    `).join('');
+  }
+
   // Render Contact Info
   renderContact() {
     const container = document.getElementById('contactInfo');
@@ -327,6 +358,8 @@ class ComponentRenderer {
       this.renderSocialLinks();
       this.renderExperience();
       this.renderProjects();
+      this.renderBlogs();
+      this.renderBooks();
       this.renderCertifications();
       this.renderContact();
       

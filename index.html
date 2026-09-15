@@ -12,11 +12,10 @@
     <!-- Preconnect to external resources for better performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://images.unsplash.com">
     <link rel="preconnect" href="https://unpkg.com">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     
 
     
@@ -27,6 +26,7 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles/themes.css">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/revamp.css">
 </head>
 <body class="bg-background text-foreground transition-colors duration-300">
     <!-- Theme Toggle -->
@@ -58,13 +58,13 @@
     <!-- Navigation -->
     <nav class="navigation" id="mainNavigation">
         <div class="container">
-            <div class="nav-brand">
-                <span class="nav-logo">SM</span>
-            </div>
+            <a class="nav-brand" href="#hero" aria-label="Sahit Mandapati home">Sahit<span>.</span></a>
             <div class="nav-links">
                 <a href="#hero" class="nav-link">Home</a>
                 <a href="#experience" class="nav-link">Experience</a>
                 <a href="#projects" class="nav-link">Projects</a>
+                <a href="#writing" class="nav-link">Writing</a>
+                <a href="#books" class="nav-link">Books</a>
                 <a href="#certifications" class="nav-link">Certifications</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
@@ -76,14 +76,22 @@
         <section id="hero" class="hero-section">
             <div class="hero-background"></div>
             <div class="container hero-content" data-aos="fade-up" data-aos-duration="800">
-                <h1 class="hero-title">Sahit Mandapati</h1>
-                <p class="hero-subtitle">Software Engineer</p>
-                <p class="hero-description">
-                    Building exceptional digital experiences with modern web technologies.
-                    Focused on creating scalable and performant applications.
-                </p>
-                <div class="social-links" id="socialLinks">
-                    <!-- Social links will be loaded dynamically -->
+                <div class="hero-copy">
+                    <p class="eyebrow"><span></span> Software engineer · Hyderabad, India</p>
+                    <h1 class="hero-title">Building useful software with <em>care</em>.</h1>
+                    <p class="hero-subtitle">I'm Sahit, a software engineer focused on thoughtful interfaces, dependable systems, and the details that make digital products feel simple.</p>
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#projects">See my work <span>↘</span></a>
+                        <a class="button button-secondary" href="#contact">Let's connect <span>↗</span></a>
+                    </div>
+                    <div class="social-links" id="socialLinks">
+                        <!-- Social links will be loaded dynamically -->
+                    </div>
+                </div>
+                <div class="hero-portrait-wrap">
+                    <div class="portrait-label">Currently building<br><strong>better insurance journeys</strong></div>
+                    <img class="profile-image" src="data/assets/sahit_profile.png" alt="Portrait of Sahit Mandapati">
+                    <div class="portrait-note">Available for thoughtful collaborations</div>
                 </div>
             </div>
         </section>
@@ -109,7 +117,27 @@
         </section>
 
         <!-- Certifications Section -->
-        <section id="certifications" class="section bg-background">
+        <section id="writing" class="section section-alt bg-background">
+            <div class="container">
+                <div class="section-heading">
+                    <div><p class="eyebrow">Thinking out loud</p><h2 class="section-title">Writing & notes</h2></div>
+                    <p class="section-intro">Ideas, lessons, and small observations from the work.</p>
+                </div>
+                <div class="writing-grid" id="blogsContainer"></div>
+            </div>
+        </section>
+
+        <section id="books" class="section bg-background">
+            <div class="container">
+                <div class="section-heading">
+                    <div><p class="eyebrow">The reading list</p><h2 class="section-title">Books I return to</h2></div>
+                    <p class="section-intro">Books that sharpen how I think about systems, craft, and people.</p>
+                </div>
+                <div class="books-grid" id="booksContainer"></div>
+            </div>
+        </section>
+
+        <section id="certifications" class="section section-alt bg-background">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">Certifications</h2>
                 <div class="certifications-grid" id="certificationsContainer">

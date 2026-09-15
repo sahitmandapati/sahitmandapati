@@ -13,7 +13,9 @@ class DataManager {
         this.fetchJSON('./data/social.json', 'social'),
         this.fetchJSON('./data/experience.json', 'experience'),
         this.fetchJSON('./data/projects.json', 'projects'),
-        this.fetchJSON('./data/certifications.json', 'certifications')
+        this.fetchJSON('./data/certifications.json', 'certifications'),
+        this.fetchJSON('./data/blogs.json', 'blogs'),
+        this.fetchJSON('./data/books.json', 'books')
       ];
 
       await Promise.all(promises);
@@ -139,6 +141,9 @@ class DataManager {
       ]
     });
 
+    this.cache.set('blogs', { blogs: [] });
+    this.cache.set('books', { books: [] });
+
     this.isLoaded = true;
   }
 
@@ -160,6 +165,14 @@ class DataManager {
 
   getCertifications() {
     return this.get('certifications')?.certifications || [];
+  }
+
+  getBlogs() {
+    return this.get('blogs')?.blogs || [];
+  }
+
+  getBooks() {
+    return this.get('books')?.books || [];
   }
 
 

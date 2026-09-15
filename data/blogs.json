@@ -1,0 +1,22 @@
+{
+  "blogs": [
+    {
+      "id": 1,
+      "title": "Engineering notes coming soon",
+      "description": "A space for practical notes on React, .NET, distributed systems, and building products that feel effortless to use.",
+      "date": "2026",
+      "readTime": "Updates soon",
+      "category": "Writing",
+      "url": "https://github.com/sahitmandapati"
+    },
+    {
+      "id": 2,
+      "title": "What I am learning right now",
+      "description": "Short field notes from the tools, architecture patterns, and product decisions shaping my work.",
+      "date": "2026",
+      "readTime": "Updates soon",
+      "category": "Learning",
+      "url": "https://www.linkedin.com/in/sahit-mandapati/"
+    }
+  ]
+}
