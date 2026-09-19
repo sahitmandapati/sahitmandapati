@@ -5,30 +5,28 @@
       "title": "Fatum",
       "description": "Insurance Portal for the Kingdom of the Netherlands - Comprehensive insurance solution with quote generation, purchase flows, and document customization.",
       "image": "",
-      "technologies": ["C#", ".NET 8", "React", "JavaScript", "HTML", "CSS", "Material-UI"],
-      "github": "https://github.com/sahitmandapati",
-      "demo": "",
-      "featured": true
+      "technologies": ["C#", ".NET 8", "React", "JavaScript", "HTML", "CSS", "Material-UI"]
     },
     {
       "id": 2,
       "title": "C360",
       "description": "Insurance Portal for the Caribbean - Modern insurance platform with seamless user experience and comprehensive coverage options.",
       "image": "",
-      "technologies": ["C#", ".NET 8", "React", "JavaScript", "HTML", "CSS", "Material-UI"],
-      "github": "https://github.com/sahitmandapati",
-      "demo": "",
-      "featured": true
+      "technologies": ["C#", ".NET 8", "React", "JavaScript", "HTML", "CSS", "Material-UI"]
     },
     {
       "id": 3,
-      "title": "Phenom Jobs Portal",
+      "title": "Phenom",
       "description": "Advanced job portal with intelligent job matching, skills ontology, and responsive design for optimal user experience.",
       "image": "",
-      "technologies": ["React", "JavaScript", "HTML", "CSS", "Material-UI"],
-      "github": "https://github.com/sahitmandapati",
-      "demo": "",
-      "featured": true
+      "technologies": ["React", "JavaScript", "HTML", "CSS", "Material-UI"]
+    },
+    {
+      "id": 4,
+      "title": "Zynchros",
+      "description": "Formulary management system - Streamlined management of formularies with comprehensive coverage and user-friendly interface.",
+      "image": "",
+      "technologies": ["C#", ".NET 10", "React", "JavaScript", "HTML", "CSS", "Material-UI", "Azure"]
     }
   ]
 }

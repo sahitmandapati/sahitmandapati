@@ -4,52 +4,6 @@ class ComponentRenderer {
     this.dataManager = dataManager;
   }
 
-  // Generate optimized placeholder image
-  generatePlaceholderImage(title, type = 'project') {
-    const colors = {
-      'project': '#3b82f6',
-      'insurance': '#059669', 
-      'jobs': '#7c3aed',
-      'default': '#6b7280'
-    };
-    
-    const getColorForProject = (title) => {
-      if (title.toLowerCase().includes('fatum') || title.toLowerCase().includes('c360')) return colors.insurance;
-      if (title.toLowerCase().includes('phenom') || title.toLowerCase().includes('jobs')) return colors.jobs;
-      return colors.project;
-    };
-    
-    const color = getColorForProject(title);
-    const firstLetter = title.charAt(0).toUpperCase();
-    
-    return `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><rect width='400' height='200' fill='${color.replace('#', '%23')}'/><text x='50%' y='50%' text-anchor='middle' dy='.1em' font-family='Inter, Arial, sans-serif' font-size='48' font-weight='600' fill='white'>${firstLetter}</text><text x='50%' y='75%' text-anchor='middle' dy='.1em' font-family='Inter, Arial, sans-serif' font-size='16' fill='white' opacity='0.9'>${title}</text></svg>`;
-  }
-
-  // Helper function to create image with error handling
-  createImageWithErrorHandling(src, alt, className = '') {
-    const img = document.createElement('img');
-    // Use placeholder image first for instant loading
-    img.src = this.generatePlaceholderImage(alt);
-    img.alt = alt;
-    img.loading = 'lazy';
-    img.className = className;
-    
-    // Load actual image in background if available
-    if (src && src.startsWith('http')) {
-      const actualImg = new Image();
-      actualImg.onload = () => {
-        img.src = src;
-      };
-      actualImg.onerror = () => {
-        // Keep placeholder image on error
-        console.log(`Failed to load image: ${src}`);
-      };
-      actualImg.src = src;
-    }
-    
-    return img;
-  }
-
   // Helper function to format date
   formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -202,9 +156,6 @@ class ComponentRenderer {
       const externalIcon = this.createIcon('external-link');
 
       item.innerHTML = `
-        <div class="project-image">
-          <!-- Image will be added programmatically with error handling -->
-        </div>
         <div class="project-content">
           <h3 class="project-title">${project.title}</h3>
           <p class="project-description">${project.description}</p>
@@ -229,55 +180,6 @@ class ComponentRenderer {
           </div>
         </div>
       `;
-      
-      // Add image with error handling
-      const imageContainer = item.querySelector('.project-image');
-      const img = this.createImageWithErrorHandling(project.image, project.title);
-      imageContainer.appendChild(img);
-
-      container.appendChild(item);
-    });
-  }
-
-  // Render Certifications
-  renderCertifications() {
-    const container = document.getElementById('certificationsContainer');
-    if (!container) return;
-
-    const certifications = this.dataManager.getCertifications();
-    container.innerHTML = '';
-
-    certifications.forEach((cert, index) => {
-      const item = document.createElement('div');
-      item.className = 'certification-card';
-      item.setAttribute('data-aos', 'fade-up');
-      item.setAttribute('data-aos-delay', (index * 200).toString());
-
-      // Create the main content structure
-      item.innerHTML = `
-        <div class="certification-icon">
-          <!-- Icon will be added programmatically -->
-        </div>
-        <h3 class="certification-title">${cert.title}</h3>
-        <p class="certification-issuer">${cert.issuer}</p>
-        <p class="certification-date">${cert.date}</p>
-      `;
-
-      // Add icon after creating the HTML structure
-      const iconContainer = item.querySelector('.certification-icon');
-      
-      // Fix icon mapping for certifications
-      const iconMap = {
-        'aws': 'cloud',
-        'cloud': 'cloud', 
-        'server': 'server',
-        'certificate': 'certificate',
-        'award': 'award'
-      };
-      
-      const iconName = iconMap[cert.icon] || 'certificate';
-      const icon = this.createIcon(iconName);
-      iconContainer.appendChild(icon);
 
       container.appendChild(item);
     });
@@ -412,11 +314,34 @@ class ComponentRenderer {
     document.body.classList.add('modal-open');
     modal.setAttribute('aria-hidden', 'false');
     bodyElement.scrollTop = 0;
+    this.updateBlogScrollHint(bodyElement);
+  }
+
+  // Shows/hides the bottom fade so readers know there's more to scroll through
+  updateBlogScrollHint(bodyElement) {
+    const panel = bodyElement.closest('.blog-modal-panel');
+    if (!panel) return;
+
+    const isScrollable = bodyElement.scrollHeight > bodyElement.clientHeight + 1;
+    panel.classList.toggle('no-scroll', !isScrollable);
+
+    if (!bodyElement.dataset.scrollHintBound) {
+      bodyElement.dataset.scrollHintBound = 'true';
+      bodyElement.addEventListener('scroll', () => {
+        const atBottom = bodyElement.scrollTop + bodyElement.clientHeight >= bodyElement.scrollHeight - 4;
+        panel.classList.toggle('at-bottom', atBottom);
+      });
+    }
   }
 
   closeBlogModal() {
     const modal = document.getElementById('blogModal');
     if (!modal) return;
+
+    // Move focus out before hiding, or aria-hidden on a focused descendant breaks assistive tech
+    if (modal.contains(document.activeElement)) {
+      document.activeElement.blur();
+    }
 
     modal.classList.remove('open');
     document.body.classList.remove('modal-open');
@@ -429,7 +354,7 @@ class ComponentRenderer {
 
     container.innerHTML = this.dataManager.getBooks().map((book, index) => `
       <a class="book-card" href="${book.url}" target="_blank" rel="noopener noreferrer" data-aos="fade-up" data-aos-delay="${index * 100}">
-        <div class="book-spine">0${index + 1}</div>
+        <div class="book-spine">${book.image ? `<img src="${book.image}" alt="${book.title} cover" loading="lazy">` : `0${index + 1}`}</div>
         <div class="book-content"><p class="book-status">${book.status}</p><h3>${book.title}</h3><p class="book-author">${book.author}</p><p class="book-description">${book.description}</p><span class="text-link">View book <span>↗</span></span></div>
       </a>
     `).join('');
@@ -486,7 +411,6 @@ class ComponentRenderer {
       this.renderProjects();
       this.renderBlogs();
       this.renderBooks();
-      this.renderCertifications();
       this.renderContact();
       
       // Initialize AOS animations after rendering

@@ -2,30 +2,49 @@
   "books": [
     {
       "id": 1,
-      "title": "Designing Data-Intensive Applications",
-      "author": "Martin Kleppmann",
-      "description": "A clear guide to the foundations behind reliable, scalable, and maintainable data systems.",
-      "status": "Re-reading",
-      "url": "https://dataintensive.net/",
-      "notes": "https://sahitmandapati.github.io/thegoldenpath818/"
+      "title": "Bhagavad Gita As It Is",
+      "author": "A.C. Bhaktivedanta Swami Prabhupada",
+      "description": "A translation and commentary on the Bhagavad Gita, exploring duty, action, and self-realization.",
+      "status": "On the shelf",
+      "url": "https://vedabase.io/en/library/bg/",
+      "image": "https://covers.openlibrary.org/b/id/1051534-L.jpg"
     },
     {
       "id": 2,
-      "title": "The Pragmatic Programmer",
-      "author": "David Thomas & Andrew Hunt",
-      "description": "A lasting reminder to build software deliberately, improve continuously, and own the details.",
-      "status": "Recommended",
-      "url": "https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/",
-      "notes": "https://sahitmandapati.github.io/thegoldenpath818/"
+      "title": "Dwapar katha",
+      "author": "Sudipta Bhowmik",
+      "description": "A story set in the Dvapara Yuga.",
+      "status": "On the shelf",
+      "url": "https://www.amazon.in/Dwapar-Katha-Mahabharata-Sudipta-Bhawmik/dp/9356995699?s=bazaar",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEe2aGOGrBiiuf3Jz9qagfRGxzbj8XvCHOf04uaN6Z3Wp4Te18dQ2TRSIew3S7Z8XnFMLzdFsELXvtZU5LnwuIS_aqfhmTrPi861Rs6JBtqA&s=10"
     },
     {
       "id": 3,
-      "title": "Clean Architecture",
-      "author": "Robert C. Martin",
-      "description": "A useful lens for keeping business rules independent from frameworks, UI, and infrastructure.",
+      "title": "The Almanack of Naval Ravikant",
+      "author": "Eric Jorgenson",
+      "description": "A curated collection of Naval Ravikant's ideas on wealth, happiness, and how to live.",
       "status": "On the shelf",
-      "url": "https://www.pearson.com/en-us/subject-catalog/p/clean-architecture-a-craftsmans-guide-to-software-structure-and-design/P200000000152/9780134494166",
-      "notes": "https://sahitmandapati.github.io/thegoldenpath818/"
+      "url": "https://www.navalmanack.com/",
+      "image": "https://covers.openlibrary.org/b/olid/OL30319349M-L.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Sapiens",
+      "author": "Yuval Noah Harari",
+      "description": "A brief history of humankind, from the cognitive revolution to the present day.",
+      "status": "On the shelf",
+      "url": "https://en.wikipedia.org/wiki/Sapiens:_A_Brief_History_of_Humankind",
+      "image": "https://covers.openlibrary.org/b/id/8634250-L.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Things Hidden Since the Foundation of the World",
+      "author": "René Girard",
+      "description": "An account of mimetic desire and the scapegoat mechanism across religion, culture, and violence.",
+      "status": "On the shelf",
+      "url": "https://en.wikipedia.org/wiki/Things_Hidden_Since_the_Foundation_of_the_World",
+      "image": "https://covers.openlibrary.org/b/id/1036224-L.jpg"
     }
   ]
 }
+

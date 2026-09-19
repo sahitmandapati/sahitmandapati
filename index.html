@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahit Mandapati - Software Engineer</title>
-    <meta name="description" content="Senior Software Engineer specializing in web development and architecture">
+    <title>Sahit Mandapati</title>
+    <meta name="description" content="Sahit Mandapati — builder, writer, and reader. Notes on software, books, and the ideas in between.">
     
     <!-- Favicon -->
     <link rel="icon" href="/data/favicon.svg" type="image/svg+xml">
@@ -31,42 +31,28 @@
 <body class="bg-background text-foreground transition-colors duration-300">
     <!-- Theme Toggle -->
     <div class="theme-toggle-container">
-        <div class="theme-toggle" id="themeToggle">
-            <button class="theme-btn" id="themeBtn">
-                <span class="icon sun-icon">☀️</span>
-                <span class="icon moon-icon">🌙</span>
-                <span class="sr-only">Toggle theme</span>
-            </button>
-            
-            <div class="theme-dropdown" id="themeDropdown">
-                <button class="theme-option" data-theme="light">
-                    <span class="icon">☀️</span>
-                    Light
-                </button>
-                <button class="theme-option" data-theme="dark">
-                    <span class="icon">🌙</span>
-                    Dark
-                </button>
-                <button class="theme-option" data-theme="system">
-                    <span class="icon">💻</span>
-                    System
-                </button>
-            </div>
-        </div>
+        <label class="theme-switch" for="themeSwitch">
+            <input type="checkbox" class="theme-switch-input" id="themeSwitch">
+            <span class="theme-switch-track">
+                <span class="theme-switch-icon sun-icon">☀️</span>
+                <span class="theme-switch-icon moon-icon">🌙</span>
+                <span class="theme-switch-thumb"></span>
+            </span>
+            <span class="sr-only">Toggle dark mode</span>
+        </label>
     </div>
 
     <!-- Navigation -->
     <nav class="navigation" id="mainNavigation">
         <div class="container">
             <a class="nav-brand" href="#hero" aria-label="Sahit Mandapati home">Sahit<span>.</span></a>
-            <div class="nav-links">
-                <a href="#hero" class="nav-link">Home</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#writing" class="nav-link">Writing</a>
-                <a href="#books" class="nav-link">Books</a>
-                <a href="#certifications" class="nav-link">Certifications</a>
-                <a href="#contact" class="nav-link">Contact</a>
+            <div class="nav-links" id="navTabs" role="tablist">
+                <a href="#hero" class="nav-link" role="tab">Home</a>
+                <a href="#writing" class="nav-link" role="tab">Writing</a>
+                <a href="#books" class="nav-link" role="tab">Books</a>
+                <a href="#projects" class="nav-link" role="tab">Projects</a>
+                <a href="#experience" class="nav-link" role="tab">Work</a>
+                <a href="#contact" class="nav-link" role="tab">Contact</a>
             </div>
         </div>
     </nav>
@@ -77,51 +63,31 @@
             <div class="hero-background"></div>
             <div class="container hero-content" data-aos="fade-up" data-aos-duration="800">
                 <div class="hero-copy">
-                    <p class="eyebrow"><span></span> Software engineer · Hyderabad, India</p>
-                    <h1 class="hero-title">Building useful software with <em>care</em>.</h1>
-                    <p class="hero-subtitle">I'm Sahit, a software engineer focused on thoughtful interfaces, dependable systems, and the details that make digital products feel simple.</p>
+                    <p class="eyebrow"><span></span> Hyderabad, India</p>
+                    <h1 class="hero-title">Curious by default, <em>building</em> along the way.</h1>
+                    <p class="hero-subtitle">I'm Sahit. I write, read, tinker with software, and spend a lot of time thinking about how systems — technical, cultural, personal — actually work. Some of that shows up here as projects, some of it as notes and half-formed ideas.</p>
                     <div class="hero-actions">
-                        <a class="button button-primary" href="#projects">See my work <span>↘</span></a>
-                        <a class="button button-secondary" href="#contact">Let's connect <span>↗</span></a>
+                        <a class="button button-primary" href="#writing">Read my notes <span>↘</span></a>
+                        <a class="button button-secondary" href="#contact">Say hello <span>↗</span></a>
                     </div>
                     <div class="social-links" id="socialLinks">
                         <!-- Social links will be loaded dynamically -->
                     </div>
                 </div>
                 <div class="hero-portrait-wrap">
-                    <div class="portrait-label">Currently building<br><strong>better insurance journeys</strong></div>
+                    <div class="portrait-label">Usually found<br><strong>reading or writing</strong></div>
                     <img class="profile-image" src="data/assets/sahit_profile.png" alt="Portrait of Sahit Mandapati">
-                    <div class="portrait-note">Available for thoughtful collaborations</div>
+                    <div class="portrait-note">Open to good conversations</div>
                 </div>
             </div>
         </section>
 
-        <!-- Experience Section -->
-        <section id="experience" class="section bg-background">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Work Experience</h2>
-                <div class="experience-container" id="experienceContainer">
-                    <!-- Experience items will be loaded dynamically -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="section bg-background">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Featured Projects</h2>
-                <div class="projects-grid" id="projectsContainer">
-                    <!-- Projects will be loaded dynamically -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Certifications Section -->
+        <!-- Writing Section -->
         <section id="writing" class="section section-alt bg-background">
             <div class="container">
                 <div class="section-heading">
                     <div><p class="eyebrow">Thinking out loud</p><h2 class="section-title">Writing & notes</h2></div>
-                    <p class="section-intro">Ideas, lessons, and small observations from the work.</p>
+                    <p class="section-intro">Ideas, lessons, and small observations — not just about work.</p>
                 </div>
                 <div class="writing-grid" id="blogsContainer"></div>
             </div>
@@ -137,11 +103,28 @@
             </div>
         </section>
 
-        <section id="certifications" class="section section-alt bg-background">
+        <!-- Projects Section -->
+        <section id="projects" class="section section-alt bg-background">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Certifications</h2>
-                <div class="certifications-grid" id="certificationsContainer">
-                    <!-- Certifications will be loaded dynamically -->
+                <div class="section-heading">
+                    <div><p class="eyebrow">Things I've made</p><h2 class="section-title">Projects & experiments</h2></div>
+                    <p class="section-intro">A mix of shipped products and things built out of curiosity.</p>
+                </div>
+                <div class="projects-grid" id="projectsContainer">
+                    <!-- Projects will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section bg-background">
+            <div class="container">
+                <div class="section-heading">
+                    <div><p class="eyebrow">The day job</p><h2 class="section-title">Where I've worked</h2></div>
+                    <p class="section-intro">One part of the picture, not the whole thing.</p>
+                </div>
+                <div class="experience-container" id="experienceContainer">
+                    <!-- Experience items will be loaded dynamically -->
                 </div>
             </div>
         </section>
@@ -152,7 +135,7 @@
                 <h2 class="section-title" data-aos="fade-up">Get In Touch</h2>
                 <div class="contact-content" data-aos="fade-up" data-aos-delay="200">
                     <p class="contact-description">
-                        I'm always interested in hearing about new opportunities and interesting projects.
+                        I like meeting people who are curious about the same things I am — books, ideas, software, or otherwise. Reach out.
                     </p>
                     <div class="contact-info" id="contactInfo">
                         <!-- Contact info will be loaded dynamically -->
@@ -176,6 +159,7 @@
                 <h3 id="blogModalTitle">Blog title</h3>
             </div>
             <div class="blog-modal-body"></div>
+            <div class="blog-modal-scroll-hint" aria-hidden="true"></div>
         </div>
     </div>
 

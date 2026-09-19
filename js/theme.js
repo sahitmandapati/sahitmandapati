@@ -9,112 +9,50 @@ class ThemeManager {
     this.setupEventListeners();
   }
 
-  loadTheme() {
-    // Get saved theme or default to system
-    const savedTheme = localStorage.getItem('theme') || 'system';
-    this.setTheme(savedTheme);
-  }
-
-  setTheme(theme) {
-    const root = document.documentElement;
-    
-    if (theme === 'system') {
-      // Remove explicit theme attribute to use CSS media query
-      root.removeAttribute('data-theme');
-      // Check system preference
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      root.classList.remove('light', 'dark');
-      root.classList.add(systemTheme);
-    } else {
-      // Set explicit theme
-      root.setAttribute('data-theme', theme);
-      root.classList.remove('light', 'dark');
-      root.classList.add(theme);
-    }
-    
-    // Save theme preference
-    localStorage.setItem('theme', theme);
-    
-    // Update theme toggle icon
-    this.updateThemeIcon(theme);
-  }
-
-  updateThemeIcon(theme) {
-    const themeBtn = document.getElementById('themeBtn');
-    const sunIcon = themeBtn?.querySelector('.sun-icon');
-    const moonIcon = themeBtn?.querySelector('.moon-icon');
-    
-    if (!sunIcon || !moonIcon) return;
-
-    // Always update based on actual applied theme
-    const currentTheme = this.getCurrentTheme();
-    
-    if (currentTheme === 'dark') {
-      sunIcon.style.transform = 'rotate(-90deg) scale(0)';
-      moonIcon.style.transform = 'rotate(0deg) scale(1)';
-    } else {
-      sunIcon.style.transform = 'rotate(0deg) scale(1)';
-      moonIcon.style.transform = 'rotate(90deg) scale(0)';
-    }
-  }
-
-  getCurrentTheme() {
-    const root = document.documentElement;
-    const dataTheme = root.getAttribute('data-theme');
-    
-    if (dataTheme) {
-      return dataTheme;
-    }
-    
-    // Check system preference
+  getSystemTheme() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
-  setupEventListeners() {
-    const themeBtn = document.getElementById('themeBtn');
-    const themeDropdown = document.getElementById('themeDropdown');
-    const themeOptions = document.querySelectorAll('.theme-option');
+  loadTheme() {
+    // An explicit user choice wins; otherwise fall back to the system preference
+    const savedTheme = localStorage.getItem('theme');
+    const theme = savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : this.getSystemTheme();
+    this.applyTheme(theme, false);
+  }
 
-    if (themeBtn) {
-      themeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        themeDropdown.classList.toggle('open');
+  applyTheme(theme, persist) {
+    const root = document.documentElement;
+    root.setAttribute('data-theme', theme);
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+
+    if (persist) {
+      localStorage.setItem('theme', theme);
+    }
+
+    this.syncSwitch(theme);
+  }
+
+  syncSwitch(theme) {
+    const input = document.getElementById('themeSwitch');
+    if (input) {
+      input.checked = theme === 'dark';
+    }
+  }
+
+  setupEventListeners() {
+    const input = document.getElementById('themeSwitch');
+    if (input) {
+      input.addEventListener('change', () => {
+        this.applyTheme(input.checked ? 'dark' : 'light', true);
       });
     }
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.theme-toggle')) {
-        themeDropdown?.classList.remove('open');
+    // Keep following the system preference until the user flips the switch themselves
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+      if (!localStorage.getItem('theme')) {
+        this.applyTheme(event.matches ? 'dark' : 'light', false);
       }
-    });
-
-    // Theme option clicks
-    themeOptions.forEach(option => {
-      option.addEventListener('click', () => {
-        const theme = option.getAttribute('data-theme');
-        this.setTheme(theme);
-        themeDropdown.classList.remove('open');
-      });
-    });
-
-    // Listen for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'system' || !savedTheme) {
-        this.setTheme('system');
-      }
-    });
-
-    // Update icon when theme changes
-    const observer = new MutationObserver(() => {
-      const savedTheme = localStorage.getItem('theme') || 'system';
-      this.updateThemeIcon(savedTheme);
-    });
-    
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme', 'class']
     });
   }
 }

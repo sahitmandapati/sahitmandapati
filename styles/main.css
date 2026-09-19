@@ -146,12 +146,15 @@ body {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 0.25rem;
+  padding: 0.3rem;
+  border-radius: 999px;
+  background-color: hsl(var(--muted) / 0.5);
 }
 
 @media (max-width: 768px) {
   .nav-links {
-    gap: 1rem;
+    gap: 0.15rem;
   }
 }
 
@@ -159,38 +162,29 @@ body {
   color: hsl(var(--muted-foreground));
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
   position: relative;
-  padding: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
 }
 
 .nav-link:hover {
   color: hsl(var(--foreground));
 }
 
-.nav-link:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: hsl(var(--primary));
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover:after {
-  width: 100%;
+.nav-link.active {
+  background-color: hsl(var(--foreground));
+  color: hsl(var(--background));
 }
 
 @media (max-width: 480px) {
   .nav-links {
-    gap: 0.5rem;
+    gap: 0.1rem;
   }
   
   .nav-link {
     font-size: 0.875rem;
-    padding: 0.25rem 0;
+    padding: 0.4rem 0.7rem;
   }
 }
 
@@ -207,96 +201,61 @@ main {
   z-index: 1001;
 }
 
-.theme-toggle {
-  position: relative;
-}
-
-.theme-btn {
-  display: flex;
+.theme-switch {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid hsl(var(--border));
-  border-radius: 6px;
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
   cursor: pointer;
-  transition: all 0.2s ease;
-  position: relative;
 }
 
-.theme-btn:hover {
-  border-color: hsl(var(--foreground));
-}
-
-.theme-btn .icon {
-  width: 1.2rem;
-  height: 1.2rem;
+.theme-switch-input {
   position: absolute;
-  transition: all 0.3s ease;
-}
-
-.theme-btn .sun-icon {
-  transform: rotate(0deg) scale(1);
-}
-
-.theme-btn .moon-icon {
-  transform: rotate(90deg) scale(0);
-}
-
-[data-theme="dark"] .theme-btn .sun-icon {
-  transform: rotate(-90deg) scale(0);
-}
-
-[data-theme="dark"] .theme-btn .moon-icon {
-  transform: rotate(0deg) scale(1);
-}
-
-.theme-dropdown {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  right: 0;
-  background-color: hsl(var(--background));
-  border: 1px solid hsl(var(--border));
-  border-radius: 6px;
-  box-shadow: 0 4px 12px hsl(var(--foreground) / 0.1);
-  min-width: 8rem;
+  width: 1px;
+  height: 1px;
   opacity: 0;
-  visibility: hidden;
-  transform: translateY(-0.5rem);
-  transition: all 0.2s ease;
-  z-index: 100;
+  pointer-events: none;
 }
 
-.theme-dropdown.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.theme-option {
+.theme-switch-track {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  border: none;
-  background: none;
-  color: hsl(var(--foreground));
-  text-align: left;
-  cursor: pointer;
+  justify-content: space-between;
+  width: 3.6rem;
+  height: 1.9rem;
+  padding: 0 0.35rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 999px;
+  background-color: hsl(var(--background));
   transition: background-color 0.2s ease;
-  font-size: 0.875rem;
 }
 
-.theme-option:hover {
-  background-color: hsl(var(--muted));
+.theme-switch-icon {
+  font-size: 0.75rem;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.theme-option .icon {
-  width: 1rem;
-  height: 1rem;
+.theme-switch-thumb {
+  position: absolute;
+  top: 0.15rem;
+  left: 0.15rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: hsl(var(--foreground));
+  box-shadow: 0 0.15rem 0.4rem hsl(var(--foreground) / 0.25);
+  transition: transform 0.25s ease;
+}
+
+.theme-switch-input:checked ~ .theme-switch-track .theme-switch-thumb {
+  transform: translateX(1.7rem);
+}
+
+.theme-switch-input:focus-visible ~ .theme-switch-track {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
 }
 
 /* Sections */
@@ -1043,16 +1002,4 @@ main {
   width: 100%;
   height: auto;
   transition: transform 0.3s ease;
-}
-
-.certification-icon {
-  width: 48px;
-  height: 48px;
-  background-color: hsl(var(--primary));
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1rem;
-  color: white;
 }

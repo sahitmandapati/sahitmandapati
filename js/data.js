@@ -13,7 +13,6 @@ class DataManager {
         this.fetchJSON('./data/social.json', 'social'),
         this.fetchJSON('./data/experience.json', 'experience'),
         this.fetchJSON('./data/projects.json', 'projects'),
-        this.fetchJSON('./data/certifications.json', 'certifications'),
         this.fetchJSON('./data/books.json', 'books')
       ];
 
@@ -23,14 +22,13 @@ class DataManager {
       return true;
     } catch (error) {
       console.error('Failed to load data:', error);
-      this.loadFallbackData();
       return false;
     }
   }
 
   async fetchJSON(url, key) {
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, { cache: 'no-store' });
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       this.cache.set(key, data);
@@ -42,55 +40,62 @@ class DataManager {
   }
 
   async loadBlogsFromMarkdownFolder() {
-    try {
-      const manifestResponse = await fetch('./data/blogs/index.json', { cache: 'no-store' });
-      if (manifestResponse.ok) {
-        const manifest = await manifestResponse.json();
-        const blogFiles = Array.isArray(manifest) ? manifest : manifest.blogs || [];
-        const blogs = await Promise.all(
-          blogFiles.map((fileName) => this.loadMarkdownBlog(fileName))
-        );
-        const validBlogs = blogs.filter(Boolean).sort((a, b) => a.title.localeCompare(b.title));
-        this.cache.set('blogs', { blogs: validBlogs });
-        return validBlogs;
-      }
-    } catch (error) {
-      console.warn('Blog manifest not available, falling back to directory listing.', error);
+    // Prefer the live directory listing so local dev servers pick up new posts instantly.
+    const directoryFiles = await this.listBlogFilesFromDirectory();
+    if (directoryFiles) {
+      return this.setBlogsFromFiles(directoryFiles);
     }
 
+    // Static hosts (e.g. GitHub Pages) don't serve directory listings, so fall back to the manifest.
+    const manifestFiles = await this.listBlogFilesFromManifest();
+    if (manifestFiles) {
+      return this.setBlogsFromFiles(manifestFiles);
+    }
+
+    console.warn('No blog listing available (neither directory index nor manifest).');
+    this.cache.set('blogs', { blogs: [] });
+    return [];
+  }
+
+  async listBlogFilesFromDirectory() {
     try {
       const response = await fetch('./data/blogs/', { cache: 'no-store' });
-      if (!response.ok) {
-        throw new Error(`Failed to list blog directory: ${response.status}`);
-      }
+      if (!response.ok) return null;
 
       const html = await response.text();
       const doc = new DOMParser().parseFromString(html, 'text/html');
-      const links = [...doc.querySelectorAll('a[href]')]
+      const files = [...doc.querySelectorAll('a[href]')]
         .map((link) => link.getAttribute('href'))
         .filter((href) => href && /\.md$/i.test(href))
-        .map((href) => decodeURIComponent(href).replace(/^\//, ''));
+        .map((href) => decodeURIComponent(href).split('/').pop());
 
-      if (!links.length) {
-        this.cache.set('blogs', { blogs: [] });
-        return [];
-      }
-
-      const blogs = await Promise.all(
-        [...new Set(links)].map((fileName) => this.loadMarkdownBlog(fileName))
-      );
-
-      const validBlogs = blogs
-        .filter(Boolean)
-        .sort((a, b) => a.title.localeCompare(b.title));
-
-      this.cache.set('blogs', { blogs: validBlogs });
-      return validBlogs;
+      const uniqueFiles = [...new Set(files)];
+      return uniqueFiles.length ? uniqueFiles : null;
     } catch (error) {
-      console.warn('Markdown blog discovery failed, falling back to empty blog list.', error);
-      this.cache.set('blogs', { blogs: [] });
-      return [];
+      console.warn('Directory listing not available, will try manifest instead.', error);
+      return null;
     }
+  }
+
+  async listBlogFilesFromManifest() {
+    try {
+      const response = await fetch('./data/blogs/index.json', { cache: 'no-store' });
+      if (!response.ok) return null;
+
+      const manifest = await response.json();
+      const files = Array.isArray(manifest) ? manifest : manifest.blogs || [];
+      return files.length ? files : null;
+    } catch (error) {
+      console.warn('Blog manifest not available.', error);
+      return null;
+    }
+  }
+
+  async setBlogsFromFiles(fileNames) {
+    const blogs = await Promise.all(fileNames.map((fileName) => this.loadMarkdownBlog(fileName)));
+    const validBlogs = blogs.filter(Boolean).sort((a, b) => a.title.localeCompare(b.title));
+    this.cache.set('blogs', { blogs: validBlogs });
+    return validBlogs;
   }
 
   async loadMarkdownBlog(fileName) {
@@ -133,6 +138,7 @@ class DataManager {
     const description = frontMatter.description || this.extractMarkdownDescription(content) || 'Read the full note.';
     const category = frontMatter.category || 'Notes';
     const date = frontMatter.date || 'Updated recently';
+    content = this.stripDuplicateTitle(content, title);
 
     return {
       id: `${fileName}`,
@@ -144,6 +150,20 @@ class DataManager {
       url: `./data/blogs/${encodeURIComponent(fileName)}`,
       content
     };
+  }
+
+  // The modal already shows the title in its header, so drop a leading line that just repeats it
+  stripDuplicateTitle(content, title) {
+    const lines = content.split('\n');
+    let index = 0;
+    while (index < lines.length && !lines[index].trim()) index += 1;
+    if (index >= lines.length) return content;
+
+    const firstLine = lines[index].trim().replace(/^#+\s*/, '').replace(/[*_`]/g, '').trim();
+    if (firstLine.toLowerCase() !== title.trim().toLowerCase()) return content;
+
+    lines.splice(index, 1);
+    return lines.join('\n').trim();
   }
 
   extractMarkdownTitle(markdown) {
@@ -168,112 +188,6 @@ class DataManager {
     return cleaned.length > 170 ? `${cleaned.slice(0, 170)}...` : cleaned;
   }
 
-  loadFallbackData() {
-    // Fallback data with current user information
-    this.cache.set('social', {
-      social: {
-        github: 'https://github.com/sahitmandapati',
-        linkedin: 'https://www.linkedin.com/in/sahit-mandapati/',
-        x: 'https://x.com/sahitmandapati',
-        email: 'sahitdev0@gmail.com',
-        phone: '7735210829',
-        location: 'Hyderabad, India',
-        favicon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>"
-      }
-    });
-
-    this.cache.set('experience', {
-      workExperience: [
-        {
-          id: 1,
-          company: 'Technovert',
-          position: 'Software Engineer',
-          period: 'November 2022 – Present',
-          location: 'Hyderabad, India',
-          description: 'Developing scalable insurance solutions with focus on quote generation, purchase flows, and secure payment integrations.',
-          achievements: [
-            'Delivered an end-to-end quote generation and purchase system, providing a seamless user journey',
-            'Implemented client-side validation on dynamic forms and improved data accuracy by 15%',
-            'Developed a document generation feature, improving document customization and adaptability by 30%'
-          ],
-          technologies: ['C#', '.NET 8', 'React', 'JavaScript', 'Material-UI']
-        },
-        {
-          id: 2,
-          company: 'Phenom',
-          position: 'Software Engineer',
-          period: 'June 2021 – July 2022',
-          location: 'Hyderabad, India',
-          description: 'Built responsive job portal solutions and recommendation systems.',
-          achievements: [
-            'Standardized skills and job ontologies with 40% improved precision',
-            'Engineered responsive front end with 50% reduction in load times'
-          ],
-          technologies: ['React', 'JavaScript', 'HTML', 'CSS', 'Material-UI']
-        }
-      ]
-    });
-
-    this.cache.set('projects', {
-      projects: [
-        {
-          id: 1,
-          title: 'Fatum',
-          description: 'Insurance Portal for the Kingdom of the Netherlands',
-          image: '',
-          technologies: ['C#', '.NET 8', 'React', 'JavaScript', 'Material-UI'],
-          github: 'https://github.com/sahitmandapati',
-          demo: '',
-          featured: true
-        },
-        {
-          id: 2,
-          title: 'C360',
-          description: 'Insurance Portal for the Caribbean',
-          image: '',
-          technologies: ['C#', '.NET 8', 'React', 'JavaScript', 'Material-UI'],
-          github: 'https://github.com/sahitmandapati',
-          demo: '',
-          featured: true
-        },
-        {
-          id: 3,
-          title: 'Phenom Jobs Portal',
-          description: 'Advanced job portal with intelligent job matching',
-          image: '',
-          technologies: ['React', 'JavaScript', 'HTML', 'CSS', 'Material-UI'],
-          github: 'https://github.com/sahitmandapati',
-          demo: '',
-          featured: true
-        }
-      ]
-    });
-
-    this.cache.set('certifications', {
-      certifications: [
-        {
-          id: 1,
-          title: 'Bachelors in Computer Science',
-          issuer: 'Gitam University',
-          date: 'June 2021',
-          icon: 'certificate'
-        },
-        {
-          id: 2,
-          title: 'Above and Beyond Award',
-          issuer: 'Technovert',
-          date: 'December 2023',
-          icon: 'award'
-        }
-      ]
-    });
-
-    this.cache.set('blogs', { blogs: [] });
-    this.cache.set('books', { books: [] });
-
-    this.isLoaded = true;
-  }
-
   get(key) {
     return this.cache.get(key);
   }
@@ -288,10 +202,6 @@ class DataManager {
 
   getProjects() {
     return this.get('projects')?.projects || [];
-  }
-
-  getCertifications() {
-    return this.get('certifications')?.certifications || [];
   }
 
   getBlogs() {

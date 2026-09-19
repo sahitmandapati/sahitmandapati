@@ -1,10 +1,24 @@
 {
   "workExperience": [
-    {
+        {
       "id": 1,
+      "company": "Phenom",
+      "position": "Software Engineer",
+      "period": "June 2021 – July 2022",
+      "location": "Hyderabad, India",
+      "description": "Built responsive job portal solutions and recommendation systems.",
+      "achievements": [
+        "Standardized skills and job ontologies, resulting in a unified recommendation framework with 40% improved precision",
+        "Engineered a responsive front end in React, contributing to 50% reduction in load times",
+        "Improved accuracy of job matching through optimized algorithms and user interface design"
+      ],
+      "technologies": ["React", "JavaScript", "HTML", "CSS", "Material-UI"]
+    },
+    {
+      "id": 2,
       "company": "Technovert",
       "position": "Software Engineer",
-      "period": "November 2022 – Present",
+      "period": "November 2022 – April 2025",
       "location": "Hyderabad, India",
       "description": "Developing scalable insurance solutions with focus on quote generation, purchase flows, and secure payment integrations.",
       "achievements": [
@@ -17,18 +31,16 @@
       "technologies": ["C#", ".NET 8", "React", "JavaScript", "HTML", "CSS", "Material-UI", "Azure Service Bus"]
     },
     {
-      "id": 2,
-      "company": "Phenom",
+      "id": 3,
+      "company": "Optum",
       "position": "Software Engineer",
-      "period": "June 2021 – July 2022",
+      "period": "April 2025 – Present",
       "location": "Hyderabad, India",
-      "description": "Built responsive job portal solutions and recommendation systems.",
+      "description": "Working on scalable healthcare solutions with focus on patient management and secure data handling.",
       "achievements": [
-        "Standardized skills and job ontologies, resulting in a unified recommendation framework with 40% improved precision",
-        "Engineered a responsive front end in React, contributing to 50% reduction in load times",
-        "Improved accuracy of job matching through optimized algorithms and user interface design"
+        ""
       ],
-      "technologies": ["React", "JavaScript", "HTML", "CSS", "Material-UI"]
+      "technologies": ["C#", ".NET 10", "React", "Azure", ".NET Framework"]
     }
   ]
 }

@@ -19,6 +19,7 @@ class PortfolioApp {
       // Setup additional features
       this.setupScrollEffects();
       this.setupSmoothScrolling();
+      this.setupScrollSpy();
 
       // Hide loading indicator
       this.hideLoading();
@@ -172,6 +173,10 @@ class PortfolioApp {
   hideLoading() {
     document.body.classList.remove('loading');
     document.body.classList.add('loaded');
+
+    // The fixed full-viewport spinner overlay must be hidden separately, or it silently blocks all clicks
+    const loadingEl = document.getElementById('loading');
+    if (loadingEl) loadingEl.classList.add('hidden');
   }
 
   scrollToSection(sectionId) {
@@ -182,6 +187,33 @@ class PortfolioApp {
         block: 'start'
       });
     }
+  }
+
+  // Highlights the nav tab matching whichever section is currently in view
+  setupScrollSpy() {
+    const navLinks = [...document.querySelectorAll('.nav-link')];
+    if (!navLinks.length) return;
+
+    const sections = navLinks
+      .map((link) => document.getElementById(link.getAttribute('href').slice(1)))
+      .filter(Boolean);
+    if (!sections.length) return;
+
+    const setActive = (id) => {
+      navLinks.forEach((link) => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+      });
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActive(visible.target.id);
+    }, { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] });
+
+    sections.forEach((section) => observer.observe(section));
+    setActive(sections[0].id);
   }
 }
 

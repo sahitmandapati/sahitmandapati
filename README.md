@@ -1,6 +1,6 @@
 # Sahit Personal Portfolio
 
-This is a personal portfolio website for Sahit Mandapati, a software engineer. It presents a modern, responsive personal brand site with sections for experience, projects, writing, books, certifications, and contact information.
+This is a personal brand website for Sahit Mandapati. It presents a modern, responsive site built around writing, books, and projects, with work experience as one part of the picture rather than the focus.
 
 ## Overview
 
