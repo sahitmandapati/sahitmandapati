@@ -6,7 +6,8 @@
       "author": "Martin Kleppmann",
       "description": "A clear guide to the foundations behind reliable, scalable, and maintainable data systems.",
       "status": "Re-reading",
-      "url": "https://dataintensive.net/"
+      "url": "https://dataintensive.net/",
+      "notes": "https://sahitmandapati.github.io/thegoldenpath818/"
     },
     {
       "id": 2,
@@ -14,7 +15,8 @@
       "author": "David Thomas & Andrew Hunt",
       "description": "A lasting reminder to build software deliberately, improve continuously, and own the details.",
       "status": "Recommended",
-      "url": "https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/"
+      "url": "https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/",
+      "notes": "https://sahitmandapati.github.io/thegoldenpath818/"
     },
     {
       "id": 3,
@@ -22,7 +24,8 @@
       "author": "Robert C. Martin",
       "description": "A useful lens for keeping business rules independent from frameworks, UI, and infrastructure.",
       "status": "On the shelf",
-      "url": "https://www.pearson.com/en-us/subject-catalog/p/clean-architecture-a-craftsmans-guide-to-software-structure-and-design/P200000000152/9780134494166"
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/clean-architecture-a-craftsmans-guide-to-software-structure-and-design/P200000000152/9780134494166",
+      "notes": "https://sahitmandapati.github.io/thegoldenpath818/"
     }
   ]
 }

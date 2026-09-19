@@ -287,14 +287,140 @@ class ComponentRenderer {
     const container = document.getElementById('blogsContainer');
     if (!container) return;
 
-    container.innerHTML = this.dataManager.getBlogs().map((blog, index) => `
-      <article class="writing-card" data-aos="fade-up" data-aos-delay="${index * 120}">
+    const blogs = this.dataManager.getBlogs();
+    container.innerHTML = blogs.map((blog, index) => `
+      <article class="writing-card blog-card" data-aos="fade-up" data-aos-delay="${index * 120}" tabindex="0" data-blog-file="${blog.file}">
         <div class="writing-card-top"><span>${blog.category}</span><span>${blog.date}</span></div>
         <h3>${blog.title}</h3>
         <p>${blog.description}</p>
-        <a class="text-link" href="${blog.url}" target="_blank" rel="noopener noreferrer">Read the notes <span>↗</span></a>
+        <button class="text-link blog-read-btn" type="button" data-blog-file="${blog.file}">Read the notes <span>↗</span></button>
       </article>
     `).join('');
+
+    this.attachBlogInteractions();
+  }
+
+  attachBlogInteractions() {
+    const modal = document.getElementById('blogModal');
+    if (modal && !modal.dataset.bound) {
+      modal.dataset.bound = 'true';
+      modal.addEventListener('click', (event) => {
+        if (event.target.closest('[data-close-blog-modal]')) {
+          this.closeBlogModal();
+        }
+      });
+
+      const closeButton = document.querySelector('.blog-modal-close');
+      if (closeButton) {
+        closeButton.addEventListener('click', () => this.closeBlogModal());
+      }
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('open')) {
+          this.closeBlogModal();
+        }
+      });
+    }
+
+    document.querySelectorAll('.blog-read-btn').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const blogFile = button.dataset.blogFile;
+        const blog = this.dataManager.getBlogs().find((entry) => entry.file === blogFile);
+        if (blog) {
+          this.openBlogModal(blog);
+        }
+      });
+    });
+
+    document.querySelectorAll('.blog-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const blogFile = card.dataset.blogFile;
+        const blog = this.dataManager.getBlogs().find((entry) => entry.file === blogFile);
+        if (blog) {
+          this.openBlogModal(blog);
+        }
+      });
+
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          const blogFile = card.dataset.blogFile;
+          const blog = this.dataManager.getBlogs().find((entry) => entry.file === blogFile);
+          if (blog) {
+            this.openBlogModal(blog);
+          }
+        }
+      });
+    });
+  }
+
+  renderMarkdownContent(markdownContent) {
+    if (typeof marked !== 'undefined') {
+      return marked.parse(markdownContent);
+    }
+
+    const escaped = markdownContent
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    const lines = escaped.split('\n');
+    const html = lines.map((line) => {
+      const trimmed = line.trim();
+      if (!trimmed) return '<br>';
+      if (/^###\s+/.test(trimmed)) return `<h3>${trimmed.replace(/^###\s+/, '')}</h3>`;
+      if (/^##\s+/.test(trimmed)) return `<h2>${trimmed.replace(/^##\s+/, '')}</h2>`;
+      if (/^#\s+/.test(trimmed)) return `<h1>${trimmed.replace(/^#\s+/, '')}</h1>`;
+      if (/^\*\s+/.test(trimmed)) return `<li>${trimmed.replace(/^\*\s+/, '')}</li>`;
+      if (/^-\s+/.test(trimmed)) return `<li>${trimmed.replace(/^-\s+/, '')}</li>`;
+      if (/^>\s+/.test(trimmed)) return `<blockquote>${trimmed.replace(/^>\s+/, '')}</blockquote>`;
+      if (/^```/.test(trimmed)) return '<pre>';
+      if (/^```\s*$/.test(trimmed)) return '</pre>';
+      return `<p>${line}</p>`;
+    }).join('');
+
+    return html
+      .replace(/<li>/g, '<ul><li>')
+      .replace(/<\/li><li>/g, '</li><li>')
+      .replace(/<\/li>\n?<ul>/g, '</li></ul>')
+      .replace(/<\/pre><pre>/g, '');
+  }
+
+  openBlogModal(blog) {
+    const modal = document.getElementById('blogModal');
+    if (!modal) return;
+
+    const titleElement = document.getElementById('blogModalTitle');
+    const metaElement = document.getElementById('blogModalMeta');
+    const bodyElement = document.querySelector('.blog-modal-body');
+
+    if (!titleElement || !metaElement || !bodyElement) return;
+
+    titleElement.textContent = blog.title;
+    metaElement.textContent = `${blog.category} • ${blog.date}`;
+
+    const markdownContent = blog.content || '';
+    bodyElement.innerHTML = this.renderMarkdownContent(markdownContent);
+
+    bodyElement.querySelectorAll('a').forEach((anchor) => {
+      anchor.setAttribute('target', '_blank');
+      anchor.setAttribute('rel', 'noopener noreferrer');
+    });
+
+    modal.classList.add('open');
+    document.body.classList.add('modal-open');
+    modal.setAttribute('aria-hidden', 'false');
+    bodyElement.scrollTop = 0;
+  }
+
+  closeBlogModal() {
+    const modal = document.getElementById('blogModal');
+    if (!modal) return;
+
+    modal.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    modal.setAttribute('aria-hidden', 'true');
   }
 
   renderBooks() {

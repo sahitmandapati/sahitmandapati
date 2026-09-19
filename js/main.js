@@ -144,22 +144,25 @@ class PortfolioApp {
   setupSmoothScrolling() {
     // Add smooth scrolling for internal anchor links only
     document.addEventListener('click', (e) => {
-      const link = e.target.closest('a');
-      if (!link) return;
-      
-      const href = link.getAttribute('href');
-      
-      // Only handle internal anchor links (those starting with #)
-      // Let all other links (external URLs, mailto:, etc.) work normally
-      if (href && href.startsWith('#')) {
-        e.preventDefault();
-        const targetId = href.substring(1);
-        this.scrollToSection(targetId);
+      const target = e.target.closest('a');
+      if (!target) return;
+
+      const href = target.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+
+      const targetId = href.substring(1).trim();
+      const section = targetId ? document.getElementById(targetId) : null;
+      if (!section) return;
+
+      e.preventDefault();
+      this.scrollToSection(targetId);
+
+      if (window.history && 'pushState' in window.history) {
+        const url = new URL(window.location.href);
+        url.hash = targetId;
+        window.history.pushState({}, '', url);
       }
-      
-      // All other links (external URLs, mailto, etc.) will work normally
-      // as we don't prevent their default behavior
-    });
+    }, { passive: false });
   }
 
   showLoading() {

@@ -14,11 +14,11 @@ class DataManager {
         this.fetchJSON('./data/experience.json', 'experience'),
         this.fetchJSON('./data/projects.json', 'projects'),
         this.fetchJSON('./data/certifications.json', 'certifications'),
-        this.fetchJSON('./data/blogs.json', 'blogs'),
         this.fetchJSON('./data/books.json', 'books')
       ];
 
       await Promise.all(promises);
+      await this.loadBlogsFromMarkdownFolder();
       this.isLoaded = true;
       return true;
     } catch (error) {
@@ -39,6 +39,133 @@ class DataManager {
       console.error(`Failed to fetch ${key}:`, error);
       throw error;
     }
+  }
+
+  async loadBlogsFromMarkdownFolder() {
+    try {
+      const manifestResponse = await fetch('./data/blogs/index.json', { cache: 'no-store' });
+      if (manifestResponse.ok) {
+        const manifest = await manifestResponse.json();
+        const blogFiles = Array.isArray(manifest) ? manifest : manifest.blogs || [];
+        const blogs = await Promise.all(
+          blogFiles.map((fileName) => this.loadMarkdownBlog(fileName))
+        );
+        const validBlogs = blogs.filter(Boolean).sort((a, b) => a.title.localeCompare(b.title));
+        this.cache.set('blogs', { blogs: validBlogs });
+        return validBlogs;
+      }
+    } catch (error) {
+      console.warn('Blog manifest not available, falling back to directory listing.', error);
+    }
+
+    try {
+      const response = await fetch('./data/blogs/', { cache: 'no-store' });
+      if (!response.ok) {
+        throw new Error(`Failed to list blog directory: ${response.status}`);
+      }
+
+      const html = await response.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const links = [...doc.querySelectorAll('a[href]')]
+        .map((link) => link.getAttribute('href'))
+        .filter((href) => href && /\.md$/i.test(href))
+        .map((href) => decodeURIComponent(href).replace(/^\//, ''));
+
+      if (!links.length) {
+        this.cache.set('blogs', { blogs: [] });
+        return [];
+      }
+
+      const blogs = await Promise.all(
+        [...new Set(links)].map((fileName) => this.loadMarkdownBlog(fileName))
+      );
+
+      const validBlogs = blogs
+        .filter(Boolean)
+        .sort((a, b) => a.title.localeCompare(b.title));
+
+      this.cache.set('blogs', { blogs: validBlogs });
+      return validBlogs;
+    } catch (error) {
+      console.warn('Markdown blog discovery failed, falling back to empty blog list.', error);
+      this.cache.set('blogs', { blogs: [] });
+      return [];
+    }
+  }
+
+  async loadMarkdownBlog(fileName) {
+    try {
+      const response = await fetch(`./data/blogs/${encodeURIComponent(fileName)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const markdown = await response.text();
+      return this.parseMarkdownBlog(markdown, fileName);
+    } catch (error) {
+      console.error(`Failed to load blog file: ${fileName}`, error);
+      return null;
+    }
+  }
+
+  parseMarkdownBlog(markdown, fileName) {
+    const normalized = markdown.trim();
+    let frontMatter = {};
+    let content = normalized;
+
+    if (normalized.startsWith('---')) {
+      const end = normalized.indexOf('\n---', 4);
+      if (end !== -1) {
+        const frontMatterBlock = normalized.slice(4, end).trim();
+        frontMatterBlock.split('\n').forEach((line) => {
+          const match = line.match(/^([A-Za-z0-9_-]+)\s*:\s*(.*)$/);
+          if (match) {
+            const [, key, value] = match;
+            frontMatter[key.trim()] = value.trim();
+          }
+        });
+        content = normalized.slice(end + 4).trim();
+      }
+    }
+
+    const fallbackTitle = fileName.replace(/\.md$/i, '').replace(/[_-]+/g, ' ');
+    const title = frontMatter.title || this.extractMarkdownTitle(content) || fallbackTitle;
+    const description = frontMatter.description || this.extractMarkdownDescription(content) || 'Read the full note.';
+    const category = frontMatter.category || 'Notes';
+    const date = frontMatter.date || 'Updated recently';
+
+    return {
+      id: `${fileName}`,
+      file: fileName,
+      title,
+      description,
+      category,
+      date,
+      url: `./data/blogs/${encodeURIComponent(fileName)}`,
+      content
+    };
+  }
+
+  extractMarkdownTitle(markdown) {
+    const heading = markdown.match(/^#\s+(.+)$/m);
+    if (heading) return heading[1].trim();
+
+    const firstLine = markdown.split('\n').find((line) => line.trim() && !line.startsWith('!['));
+    return firstLine ? firstLine.replace(/[#>*_`\[\]()]/g, '').trim() : '';
+  }
+
+  extractMarkdownDescription(markdown) {
+    const contentWithoutFrontMatter = markdown.replace(/^---[\s\S]*?---\s*/, '').replace(/^#.*\n+/m, '');
+    const lines = contentWithoutFrontMatter
+      .split(/\n+/)
+      .map((line) => line.trim())
+      .filter((line) => line && !line.startsWith('![') && !line.startsWith('```') && !line.startsWith('#') && !line.startsWith('- ') && !line.startsWith('* '));
+
+    const firstParagraph = lines.find((line) => line.length > 20);
+    if (!firstParagraph) return 'Read the full note.';
+
+    const cleaned = firstParagraph.replace(/[*_`]/g, '').trim();
+    return cleaned.length > 170 ? `${cleaned.slice(0, 170)}...` : cleaned;
   }
 
   loadFallbackData() {
@@ -174,8 +301,6 @@ class DataManager {
   getBooks() {
     return this.get('books')?.books || [];
   }
-
-
 }
 
 // Global data manager instance
