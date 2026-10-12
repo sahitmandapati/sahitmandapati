@@ -1,6 +1,6 @@
 # Zig Ziglar's Secrets of Closing the Sale
 
-my notes on Zig Ziglar's Secrets of Closing the Sale
+my notes on Zig Ziglar's Secrets of Closing the Sale.
 
 
 
