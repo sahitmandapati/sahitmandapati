@@ -89,6 +89,7 @@ class ComponentRenderer {
       
       anchor.appendChild(this.createIcon(link.icon));
       const label = document.createElement('span');
+      label.className = 'sr-only';
       label.textContent = link.label;
       anchor.appendChild(label);
       container.appendChild(anchor);
@@ -143,27 +144,19 @@ class ComponentRenderer {
     const container = document.getElementById('projectsContainer');
     if (!container) return;
 
-    const projects = this.dataManager.getProjects();
-    container.innerHTML = '';
+    const githubIcon = this.createIcon('github');
+    const externalIcon = this.createIcon('external-link');
 
-    projects.forEach((project, index) => {
-      const item = document.createElement('div');
-      item.className = 'project-card';
-      item.setAttribute('data-aos', 'fade-up');
-      item.setAttribute('data-aos-delay', (index * 200).toString());
-
-      const githubIcon = this.createIcon('github');
-      const externalIcon = this.createIcon('external-link');
-
-      item.innerHTML = `
+    const cards = this.dataManager.getProjects().map((project) => `
+      <div class="project-card">
         <div class="project-content">
           <h3 class="project-title">${project.title}</h3>
           <p class="project-description">${project.description}</p>
-          
+
           <div class="project-technologies">
             ${project.technologies.map(tech => `<span class="tech-badge">${tech}</span>`).join('')}
           </div>
-          
+
           <div class="project-links">
             ${project.github ? `
               <a href="${project.github}" class="project-link" target="_blank" rel="noopener noreferrer">
@@ -179,25 +172,28 @@ class ComponentRenderer {
             ` : ''}
           </div>
         </div>
-      `;
+      </div>
+    `).join('');
 
-      container.appendChild(item);
-    });
+    // Duplicate the set so the marquee track can loop seamlessly at the halfway point
+    container.innerHTML = cards + cards;
   }
 
   renderBlogs() {
     const container = document.getElementById('blogsContainer');
     if (!container) return;
 
-    const blogs = this.dataManager.getBlogs();
-    container.innerHTML = blogs.map((blog, index) => `
-      <article class="writing-card blog-card" data-aos="fade-up" data-aos-delay="${index * 120}" tabindex="0" data-blog-file="${blog.file}">
+    const cards = this.dataManager.getBlogs().map((blog) => `
+      <article class="writing-card blog-card" tabindex="0" data-blog-file="${blog.file}">
         <div class="writing-card-top"><span>${blog.category}</span><span>${blog.date}</span></div>
         <h3>${blog.title}</h3>
         <p>${blog.description}</p>
         <button class="text-link blog-read-btn" type="button" data-blog-file="${blog.file}">Read the notes <span>↗</span></button>
       </article>
     `).join('');
+
+    // Duplicate the set so the marquee track can loop seamlessly at the halfway point
+    container.innerHTML = cards + cards;
 
     this.attachBlogInteractions();
   }
@@ -352,12 +348,18 @@ class ComponentRenderer {
     const container = document.getElementById('booksContainer');
     if (!container) return;
 
-    container.innerHTML = this.dataManager.getBooks().map((book, index) => `
-      <a class="book-card" href="${book.url}" target="_blank" rel="noopener noreferrer" data-aos="fade-up" data-aos-delay="${index * 100}">
-        <div class="book-spine">${book.image ? `<img src="${book.image}" alt="${book.title} cover" loading="lazy">` : `0${index + 1}`}</div>
-        <div class="book-content"><p class="book-status">${book.status}</p><h3>${book.title}</h3><p class="book-author">${book.author}</p><p class="book-description">${book.description}</p><span class="text-link">View book <span>↗</span></span></div>
+    const cards = this.dataManager.getBooks().map((book) => `
+      <a class="book-card" href="${book.url}" target="_blank" rel="noopener noreferrer">
+        <p class="book-status">${book.status}</p>
+        <h3>${book.title}</h3>
+        <p class="book-author">${book.author}</p>
+        <p class="book-description">${book.description}</p>
+        <span class="text-link">View book <span>↗</span></span>
       </a>
     `).join('');
+
+    // Duplicate the set so the marquee track can loop seamlessly at the halfway point
+    container.innerHTML = cards + cards;
   }
 
   // Render Contact Info

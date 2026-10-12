@@ -135,10 +135,11 @@ class DataManager {
 
     const fallbackTitle = fileName.replace(/\.md$/i, '').replace(/[_-]+/g, ' ');
     const title = frontMatter.title || this.extractMarkdownTitle(content) || fallbackTitle;
+    // Strip the title line before pulling a description, otherwise the first paragraph (the title itself) gets reused as both
+    content = this.stripDuplicateTitle(content, title);
     const description = frontMatter.description || this.extractMarkdownDescription(content) || 'Read the full note.';
     const category = frontMatter.category || 'Notes';
     const date = frontMatter.date || 'Updated recently';
-    content = this.stripDuplicateTitle(content, title);
 
     return {
       id: `${fileName}`,
