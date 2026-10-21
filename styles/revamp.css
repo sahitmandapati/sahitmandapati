@@ -295,6 +295,11 @@ main { margin-top: 0; }
 }
 .writing-card { flex: 0 0 340px; padding: 1.75rem; border-top: none; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: none; transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s var(--ease); }
 .writing-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); border-color: transparent; }
+.carousel-controls { display: flex; justify-content: center; gap: 0.75rem; margin-top: 1.5rem; }
+.carousel-control { display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--paper); color: var(--ink); font: inherit; font-size: 1.15rem; cursor: pointer; transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease), transform 0.2s var(--ease); }
+.carousel-control:hover { transform: translateY(-2px); border-color: var(--accent); background: var(--accent); color: #fff; }
+.carousel-control:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.carousel-manual { animation: none !important; transition: transform 0.35s var(--ease); }
 .writing-card-top { display: flex; justify-content: space-between; color: var(--muted-ink); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 .writing-card h3 { margin: 1.5rem 0 0.7rem; color: var(--ink); font-size: 1.3rem; font-weight: 600; letter-spacing: -0.015em; }
 .writing-card p { color: var(--muted-ink); font-size: 0.9rem; line-height: 1.55; }
@@ -435,8 +440,9 @@ body.modal-open { overflow: hidden; }
 /* Being the last section, it needs enough height to scroll fully under scroll-margin-top when its nav link is clicked */
 #contact.section { min-height: 100vh; display: flex; align-items: center; }
 #contact .container { width: 100%; }
-.contact-link { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.8rem 1.3rem; border-radius: 999px; background: rgba(245, 245, 247, 0.12); color: #fff; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: background-color 0.25s var(--ease), transform 0.25s var(--ease); }
-.contact-link:hover { background: var(--accent); transform: translateY(-2px); }
+.contact-link { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.8rem 1.3rem; border: 1px solid rgba(245, 245, 247, 0.16); border-radius: 999px; background: rgba(245, 245, 247, 0.12); color: #fff; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), transform 0.25s var(--ease); }
+.contact-link:hover, .contact-link:focus-visible { border-color: #f5f5f7; background: #f5f5f7; color: #1d1d1f; }
+.contact-link:focus-visible { outline: 2px solid #f5f5f7; outline-offset: 3px; }
 
 @media (max-width: 900px) {
   .hero-content { gap: 3rem; }
@@ -487,4 +493,3 @@ body.modal-open { overflow: hidden; }
   .hero-copy { max-width: 840px; }
   .hero-portrait-wrap { width: min(100%, 460px); }
 }
-

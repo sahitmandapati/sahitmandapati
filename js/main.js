@@ -20,6 +20,7 @@ class PortfolioApp {
       this.setupScrollEffects();
       this.setupSmoothScrolling();
       this.setupScrollSpy();
+      this.setupCarouselControls();
 
       // Hide loading indicator
       this.hideLoading();
@@ -164,6 +165,38 @@ class PortfolioApp {
         window.history.pushState({}, '', url);
       }
     }, { passive: false });
+  }
+
+  setupCarouselControls() {
+    document.querySelectorAll('.carousel-control').forEach((button) => {
+      button.addEventListener('click', () => {
+        const track = document.getElementById(button.dataset.carouselTarget);
+        const direction = button.dataset.carouselDirection;
+        const card = track?.firstElementChild;
+        if (!track || !card || !['left', 'right'].includes(direction)) return;
+
+        if (!track.classList.contains('carousel-manual')) {
+          const transform = getComputedStyle(track).transform;
+          const offset = transform === 'none' ? 0 : new DOMMatrixReadOnly(transform).m41;
+          track.dataset.carouselOffset = offset.toString();
+          track.classList.add('carousel-manual');
+          track.style.transform = `translateX(${offset}px)`;
+        }
+
+        const cardWidth = card.getBoundingClientRect().width;
+        const trackStyles = getComputedStyle(track);
+        const gap = parseFloat(trackStyles.columnGap) || 0;
+        const halfTrackWidth = track.scrollWidth / 2;
+        if (!halfTrackWidth) return;
+
+        const offset = parseFloat(track.dataset.carouselOffset) || 0;
+        const movement = cardWidth + gap;
+        const nextOffset = offset + (direction === 'left' ? -movement : movement);
+        const wrappedOffset = ((nextOffset % halfTrackWidth) + halfTrackWidth) % halfTrackWidth - halfTrackWidth;
+        track.dataset.carouselOffset = wrappedOffset.toString();
+        track.style.transform = `translateX(${wrappedOffset}px)`;
+      });
+    });
   }
 
   showLoading() {
