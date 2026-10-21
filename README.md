@@ -24,7 +24,7 @@ Blog posts are automatically discovered from the `data/blogs/` folder. Any new `
 - Work experience timeline
 - Featured projects section
 - Writing and notes section
-- Per-post share links that open the selected post directly
+- Full-page article views with shareable links to individual posts
 - Books section
 - Certifications section
 - Contact section with social links

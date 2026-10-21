@@ -202,36 +202,24 @@ class ComponentRenderer {
   }
 
   attachBlogInteractions() {
-    const modal = document.getElementById('blogModal');
-    if (modal && !modal.dataset.bound) {
-      modal.dataset.bound = 'true';
-      modal.addEventListener('click', (event) => {
-        if (event.target.closest('[data-close-blog-modal]')) {
-          this.closeBlogModal();
-        }
+    const page = document.getElementById('blogPage');
+    if (page && !page.dataset.bound) {
+      page.dataset.bound = 'true';
+
+      const backLink = page.querySelector('.blog-page-back');
+      backLink?.addEventListener('click', (event) => {
+        event.preventDefault();
+        this.closeBlogPage();
       });
 
-      const closeButton = document.querySelector('.blog-modal-close');
-      if (closeButton) {
-        closeButton.addEventListener('click', () => this.closeBlogModal());
-      }
-
-      const shareButton = document.querySelector('.blog-modal-share');
-      if (shareButton) {
-        shareButton.addEventListener('click', () => {
-          const blogFile = modal.dataset.blogFile;
-          const blog = this.dataManager.getBlogs().find((entry) => entry.file === blogFile);
-          if (blog) this.copyBlogLink(blog, shareButton);
-        });
-      }
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modal.classList.contains('open')) {
-          this.closeBlogModal();
-        }
+      const shareButton = page.querySelector('.blog-page-share');
+      shareButton?.addEventListener('click', () => {
+        const blogFile = page.dataset.blogFile;
+        const blog = this.dataManager.getBlogs().find((entry) => entry.file === blogFile);
+        if (blog) this.copyBlogLink(blog, shareButton);
       });
 
-      window.addEventListener('popstate', () => this.syncBlogModalWithUrl());
+      window.addEventListener('popstate', () => this.syncBlogPageWithUrl());
     }
 
     document.querySelectorAll('.blog-read-btn').forEach((button) => {
@@ -240,7 +228,7 @@ class ComponentRenderer {
         const blogFile = button.dataset.blogFile;
         const blog = this.dataManager.getBlogs().find((entry) => entry.file === blogFile);
         if (blog) {
-          this.openBlogModal(blog);
+          this.openBlogPage(blog);
         }
       });
     });
@@ -258,7 +246,7 @@ class ComponentRenderer {
         const blogFile = card.dataset.blogFile;
         const blog = this.dataManager.getBlogs().find((entry) => entry.file === blogFile);
         if (blog) {
-          this.openBlogModal(blog);
+          this.openBlogPage(blog);
         }
       });
 
@@ -268,13 +256,13 @@ class ComponentRenderer {
           const blogFile = card.dataset.blogFile;
           const blog = this.dataManager.getBlogs().find((entry) => entry.file === blogFile);
           if (blog) {
-            this.openBlogModal(blog);
+            this.openBlogPage(blog);
           }
         }
       });
     });
 
-    this.syncBlogModalWithUrl();
+    this.syncBlogPageWithUrl();
   }
 
   getBlogUrl(blog) {
@@ -297,19 +285,19 @@ class ComponentRenderer {
     }
   }
 
-  syncBlogModalWithUrl() {
+  syncBlogPageWithUrl() {
     const blogFile = new URL(window.location.href).searchParams.get('blog');
-    const modal = document.getElementById('blogModal');
+    const page = document.getElementById('blogPage');
     if (!blogFile) {
-      if (modal?.classList.contains('open')) this.closeBlogModal(false);
+      if (page && !page.hidden) this.closeBlogPage(false);
       return;
     }
 
     const blog = this.dataManager.getBlogs().find((entry) => entry.file === blogFile);
     if (blog) {
-      this.openBlogModal(blog, false);
-    } else if (modal?.classList.contains('open')) {
-      this.closeBlogModal(false);
+      this.openBlogPage(blog, false);
+    } else if (page && !page.hidden) {
+      this.closeBlogPage(false);
     }
   }
 
@@ -345,23 +333,23 @@ class ComponentRenderer {
       .replace(/<\/pre><pre>/g, '');
   }
 
-  openBlogModal(blog, updateUrl = true) {
-    const modal = document.getElementById('blogModal');
-    if (!modal) return;
+  openBlogPage(blog, updateUrl = true) {
+    const page = document.getElementById('blogPage');
+    if (!page) return;
 
     if (updateUrl && new URL(window.location.href).searchParams.get('blog') !== blog.file) {
       window.history.pushState({}, '', this.getBlogUrl(blog));
     }
 
-    const titleElement = document.getElementById('blogModalTitle');
-    const metaElement = document.getElementById('blogModalMeta');
-    const bodyElement = document.querySelector('.blog-modal-body');
+    const titleElement = document.getElementById('blogPageTitle');
+    const metaElement = document.getElementById('blogPageMeta');
+    const bodyElement = page.querySelector('.blog-page-body');
 
     if (!titleElement || !metaElement || !bodyElement) return;
 
     titleElement.textContent = blog.title;
     metaElement.textContent = `${blog.category} • ${blog.date}`;
-    modal.dataset.blogFile = blog.file;
+    page.dataset.blogFile = blog.file;
 
     const markdownContent = blog.content || '';
     bodyElement.innerHTML = this.renderMarkdownContent(markdownContent);
@@ -371,33 +359,15 @@ class ComponentRenderer {
       anchor.setAttribute('rel', 'noopener noreferrer');
     });
 
-    modal.classList.add('open');
-    document.body.classList.add('modal-open');
-    modal.setAttribute('aria-hidden', 'false');
-    bodyElement.scrollTop = 0;
-    this.updateBlogScrollHint(bodyElement);
+    page.hidden = false;
+    document.body.classList.add('blog-page-open');
+    document.title = `${blog.title} | Sahit Mandapati`;
+    window.scrollTo(0, 0);
   }
 
-  // Shows/hides the bottom fade so readers know there's more to scroll through
-  updateBlogScrollHint(bodyElement) {
-    const panel = bodyElement.closest('.blog-modal-panel');
-    if (!panel) return;
-
-    const isScrollable = bodyElement.scrollHeight > bodyElement.clientHeight + 1;
-    panel.classList.toggle('no-scroll', !isScrollable);
-
-    if (!bodyElement.dataset.scrollHintBound) {
-      bodyElement.dataset.scrollHintBound = 'true';
-      bodyElement.addEventListener('scroll', () => {
-        const atBottom = bodyElement.scrollTop + bodyElement.clientHeight >= bodyElement.scrollHeight - 4;
-        panel.classList.toggle('at-bottom', atBottom);
-      });
-    }
-  }
-
-  closeBlogModal(updateUrl = true) {
-    const modal = document.getElementById('blogModal');
-    if (!modal) return;
+  closeBlogPage(updateUrl = true) {
+    const page = document.getElementById('blogPage');
+    if (!page) return;
 
     if (updateUrl) {
       const url = new URL(window.location.href);
@@ -407,14 +377,10 @@ class ComponentRenderer {
       }
     }
 
-    // Move focus out before hiding, or aria-hidden on a focused descendant breaks assistive tech
-    if (modal.contains(document.activeElement)) {
-      document.activeElement.blur();
-    }
-
-    modal.classList.remove('open');
-    document.body.classList.remove('modal-open');
-    modal.setAttribute('aria-hidden', 'true');
+    page.hidden = true;
+    document.body.classList.remove('blog-page-open');
+    document.title = 'Sahit Mandapati';
+    document.getElementById('writing')?.scrollIntoView({ behavior: 'smooth' });
   }
 
   renderBooks() {

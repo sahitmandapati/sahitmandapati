@@ -157,6 +157,17 @@ class PortfolioApp {
       if (!section) return;
 
       e.preventDefault();
+      if (document.body.classList.contains('blog-page-open')) {
+        const blogPage = document.getElementById('blogPage');
+        if (blogPage) {
+          blogPage.hidden = true;
+          document.body.classList.remove('blog-page-open');
+          const url = new URL(window.location.href);
+          url.searchParams.delete('blog');
+          window.history.replaceState({}, '', url);
+          document.title = 'Sahit Mandapati';
+        }
+      }
       this.scrollToSection(targetId);
 
       if (window.history && 'pushState' in window.history) {

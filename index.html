@@ -163,19 +163,17 @@
         <div class="loading-spinner"></div>
     </div>
 
-    <div class="blog-modal" id="blogModal" aria-hidden="true">
-        <div class="blog-modal-backdrop" data-close-blog-modal></div>
-        <div class="blog-modal-panel" role="dialog" aria-modal="true" aria-labelledby="blogModalTitle">
-            <button class="blog-modal-close" type="button" aria-label="Close blog">×</button>
-            <div class="blog-modal-header">
-                <p class="blog-modal-meta" id="blogModalMeta">Notes</p>
-                <h3 id="blogModalTitle">Blog title</h3>
-                <button class="text-link blog-modal-share" type="button">Copy link</button>
-            </div>
-            <div class="blog-modal-body"></div>
-            <div class="blog-modal-scroll-hint" aria-hidden="true"></div>
+    <section class="blog-page-view" id="blogPage" hidden aria-labelledby="blogPageTitle">
+        <div class="container blog-page-container">
+            <a class="blog-page-back" href="#writing">← Back to writing</a>
+            <header class="blog-page-header">
+                <p class="blog-page-meta" id="blogPageMeta">Notes</p>
+                <h1 id="blogPageTitle">Blog title</h1>
+                <button class="text-link blog-page-share" type="button">Copy link</button>
+            </header>
+            <article class="blog-page-body"></article>
         </div>
-    </div>
+    </section>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
