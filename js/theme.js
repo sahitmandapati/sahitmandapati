@@ -26,6 +26,13 @@ class ThemeManager {
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
 
+    const profileImage = document.querySelector('.profile-image');
+    if (profileImage) {
+      profileImage.src = theme === 'dark'
+        ? profileImage.dataset.darkSrc
+        : 'data/assets/sahit_profile.png';
+    }
+
     if (persist) {
       localStorage.setItem('theme', theme);
     }
