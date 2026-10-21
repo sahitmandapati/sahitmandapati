@@ -303,6 +303,7 @@ main { margin-top: 0; }
 .writing-card-top { display: flex; justify-content: space-between; color: var(--muted-ink); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 .writing-card h3 { margin: 1.5rem 0 0.7rem; color: var(--ink); font-size: 1.3rem; font-weight: 600; letter-spacing: -0.015em; }
 .writing-card p { color: var(--muted-ink); font-size: 0.9rem; line-height: 1.55; }
+.blog-card-actions { display: flex; flex-wrap: wrap; gap: 1rem; }
 .text-link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.2rem; color: var(--accent); font-size: 0.8rem; font-weight: 600; text-decoration: none; border: none; background: transparent; cursor: pointer; padding: 0; font-family: inherit; }
 .text-link:hover { color: var(--ink); }
 .blog-card { cursor: pointer; }
@@ -333,6 +334,7 @@ main { margin-top: 0; }
 .blog-modal-header { flex: 0 0 auto; border-bottom: 1px solid var(--line); padding-bottom: 1rem; margin-bottom: 1.25rem; padding-right: 2.75rem; }
 .blog-modal-meta { color: var(--muted-ink); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
 .blog-modal-header h3 { margin-top: 0.5rem; font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+.blog-modal-share { margin-top: 1rem; }
 .blog-modal-close {
   position: absolute;
   top: 0.75rem;

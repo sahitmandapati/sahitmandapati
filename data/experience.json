@@ -4,7 +4,7 @@
       "id": 1,
       "company": "Phenom",
       "position": "Software Engineer",
-      "period": "June 2021 – July 2022",
+      "period": "June 2021 to July 2022",
       "location": "Hyderabad, India",
       "description": "Built responsive job portal solutions and recommendation systems.",
       "achievements": [
@@ -18,7 +18,7 @@
       "id": 2,
       "company": "Technovert",
       "position": "Software Engineer",
-      "period": "November 2022 – April 2025",
+      "period": "November 2022 to April 2025",
       "location": "Hyderabad, India",
       "description": "Developing scalable insurance solutions with focus on quote generation, purchase flows, and secure payment integrations.",
       "achievements": [
@@ -34,7 +34,7 @@
       "id": 3,
       "company": "Optum",
       "position": "Software Engineer",
-      "period": "April 2025 – Present",
+      "period": "April 2025 to Present",
       "location": "Hyderabad, India",
       "description": "Working on scalable healthcare solutions with focus on patient management and secure data handling.",
       "achievements": [

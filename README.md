@@ -24,6 +24,7 @@ Blog posts are automatically discovered from the `data/blogs/` folder. Any new `
 - Work experience timeline
 - Featured projects section
 - Writing and notes section
+- Per-post share links that open the selected post directly
 - Books section
 - Certifications section
 - Contact section with social links
@@ -107,6 +108,7 @@ Ctrl + C
 ### Blog posts
 
 Add a new Markdown file to `data/blogs/` and it will appear automatically in the Writing section when the page loads.
+Use a post's **Copy link** button to share its direct URL. Opening that URL displays the selected post.
 
 Example:
 

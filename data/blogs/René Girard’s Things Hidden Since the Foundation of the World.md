@@ -7,7 +7,7 @@ Human desire is imitative (mimetic).
 
 Imitation easily escalates into rivalry and collective violence (the scapegoat mechanism).
 
-The Judaeo‑Christian scriptures gradually reveal—rather than hide—this mechanism, culminating in the Gospels’ focus on the innocent victim.
+The Judaeo‑Christian scriptures gradually reveal, rather than hide, this mechanism, culminating in the Gospels’ focus on the innocent victim.
 
 What follows is a blog‑friendly walkthrough of those ideas and why they matter now.
 
@@ -18,7 +18,7 @@ When someone wants something, that alone makes it more desirable to others.
 
 Desire spreads by imitation: I want it because you want it, not because of its intrinsic value.
 
-He calls this acquisitive mimesis. A classic example: put identical toys in a room with children. They will often fight over one toy, not because it’s unique, but because each is attracted by the other’s desire. The object becomes a signal of someone else’s wanting—and that is what hooks us.
+He calls this acquisitive mimesis. A classic example: put identical toys in a room with children. They will often fight over one toy, not because it’s unique, but because each is attracted by the other’s desire. The object becomes a signal of someone else’s wanting, and that is what hooks us.
 
 This leads to mimetic rivalry: the more two people imitate each other’s desire, the more they collide over the same thing, escalating conflict.
 
@@ -33,14 +33,14 @@ Violence becomes reciprocal and contagious.
 
 Girard calls this a mimetic crisis. It’s like a social feedback loop: each person’s aggression intensifies the next person’s, until the whole group teeters on collapse.
 
-Traditional societies, Girard argues, intuited this danger. That’s why they built dense systems of prohibitions (taboos)—around sex, property, status, and access to key resources—to pre‑emptively block situations where mimetic rivalry would explode. Many religious “don’ts” are less about abstract morality and more about crisis‑prevention.
+Traditional societies, Girard argues, intuited this danger. That’s why they built dense systems of prohibitions (taboos) around sex, property, status, and access to key resources to pre‑emptively block situations where mimetic rivalry would explode. Many religious “don’ts” are less about abstract morality and more about crisis‑prevention.
 
 The Scapegoat Mechanism: How Violence Produces Order
 Girard’s most famous and controversial claim is about what happens when norms fail and a mimetic crisis goes full‑blown. At the height of chaos, something eerie tends to happen:
 
-The crowd converges on a single victim—someone marginal, different, vulnerable, or ambiguously marked.
+The crowd converges on a single victim, someone marginal, different, vulnerable, or ambiguously marked.
 
-The group decides—often implicitly, not consciously—that this one person is the cause of their troubles.
+The group decides, often implicitly and not consciously, that this one person is the cause of their troubles.
 
 They expel, kill, or symbolically destroy this victim.
 
@@ -52,7 +52,7 @@ For Girard, this is the buried engine behind archaic religion and culture:
 
 Myths retell the crisis and killing but from the persecutors’ point of view, portraying the victim as guilty or semi‑divine and justifying the violence.
 
-Rituals and sacrifices re‑enact the founding murder in controlled, repeatable ways—substituting animals, ritual kings, symbolic offerings—to renew social cohesion without falling into uncontrolled bloodshed.
+Rituals and sacrifices re‑enact the founding murder in controlled, repeatable ways, substituting animals, ritual kings, or symbolic offerings to renew social cohesion without falling into uncontrolled bloodshed.
 
 Prohibitions work upstream to reduce the chances of another uncontrollable mimetic meltdown.
 
@@ -61,7 +61,7 @@ Culture, in this picture, is founded on a misrecognized murder: the community’
 Religion Reframed: Not Speculation, But Violence Management
 This flips the usual picture of religion.
 
-Instead of seeing religion as primitive metaphysics or superstition, Girard treats it as an early—and surprisingly effective—technology for managing internal violence:
+Instead of seeing religion as primitive metaphysics or superstition, Girard treats it as an early and surprisingly effective technology for managing internal violence:
 
 Sacrifice channels aggression onto contained victims.
 
@@ -69,13 +69,13 @@ Ritual repetition keeps the founding trauma at a safe symbolic distance.
 
 Myth provides a narrative that stabilizes and justifies this system.
 
-Religion works because it does something practical: it stops communities from destroying themselves through mimetic rivalry. But it works by lying about the victim—by presenting the scapegoat as genuinely guilty or legitimately sacrificed.
+Religion works because it does something practical: it stops communities from destroying themselves through mimetic rivalry. But it works by lying about the victim by presenting the scapegoat as genuinely guilty or legitimately sacrificed.
 
 Myth vs. the Bible: Who Gets to Tell the Victim’s Story?
 A huge part of Things Hidden is Girard’s reading of the Judaeo‑Christian scriptures alongside world mythologies.
 
 How Myth Talks
-Myths describe crises (plagues, wars, monsters, social breakdown) resolved when a figure—often a god, king, or monster—is killed, expelled, or dismembered.
+Myths describe crises (plagues, wars, monsters, social breakdown) resolved when a figure, often a god, king, or monster, is killed, expelled, or dismembered.
 
 The narrative sides with the community and implies the victim really was dangerous or guilty.
 
@@ -92,7 +92,7 @@ The “suffering servant” in Isaiah is despised and rejected, yet is portrayed
 
 These stories expose, rather than bless, the community’s tendency to blame and expel a victim. The persecutors’ voice is present but questioned or overturned.
 
-The Bible, for Girard, is a long, uneven but real process of demystifying the scapegoat mechanism—slowly revealing that victims are often innocent and collective violence is a lie.
+The Bible, for Girard, is a long, uneven but real process of demystifying the scapegoat mechanism, slowly revealing that victims are often innocent and collective violence is a lie.
 
 The Gospels: The Founding Murder Exposed
 The turning point is the Gospel passion narratives.
@@ -132,7 +132,7 @@ The cross is not God’s demand, but humanity’s scapegoating at work again.
 
 God doesn’t orchestrate the violence; God exposes it, forgives it, and breaks its spell by taking the victim’s side.
 
-The “sacrifice” is human—not divine—violence, revealed and judged in the light of the resurrection.
+The “sacrifice” is human, not divine, violence, revealed and judged in the light of the resurrection.
 
 On this reading, genuine Christianity is anti‑sacrificial: it calls for solidarity with victims, refusal of scapegoating, and dismantling of social orders that rely on exclusion and persecution.
 
@@ -155,14 +155,14 @@ Suspicion of political and religious violence.
 
 The moral centrality of the marginalized.
 
-But the flip side is that we’re now hyper‑sensitive to victims and still deeply mimetic—creating new scapegoats in the name of protecting victims.
+But the flip side is that we’re now hyper‑sensitive to victims and still deeply mimetic, creating new scapegoats in the name of protecting victims.
 
 Logos Reimagined: From Greek Rationality to the Crucified Word
 In one of the more philosophical parts, Girard compares Heraclitus’ and other Greek philosophers’ concept of the logos with the Gospel of John’s “In the beginning was the Word (Logos).”
 
 Greek logos: the rational structure of reality, a cosmic law of becoming and order, sometimes linked to conflict and balance.
 
-Johannine Logos: not just an abstract principle, but a person—the Word made flesh, rejected and crucified.
+Johannine Logos: not just an abstract principle, but a person, the Word made flesh, rejected and crucified.
 
 Girard argues that the true rational structure of the world is unveiled not in a neutral cosmic law but in the story of the victim:
 
@@ -185,9 +185,9 @@ Object: the thing apparently desired.
 
 We don’t usually desire objects directly; we desire them through models.
 
-When the model is distant or unattainable (a celebrity, hero, saint), Girard calls it external mediation—less likely to lead to direct rivalry.
+When the model is distant or unattainable (a celebrity, hero, saint), Girard calls it external mediation, which is less likely to lead to direct rivalry.
 
-When the model is close (a colleague, sibling, friend), it becomes internal mediation—fertile ground for jealousy, competition, and conflict.
+When the model is close (a colleague, sibling, friend), it becomes internal mediation, fertile ground for jealousy, competition, and conflict.
 
 This triangular structure helps explain:
 
@@ -216,7 +216,7 @@ Internal obstacles (other desiring subjects, rivals) grow more intense.
 
 Individuals feel more “free,” yet are more trapped in endless comparison and competition: professionally, sexually, socially.
 
-The modern world is incredibly creative and productive precisely because it unleashes mimetic desire—but it’s also saturated with anxiety, status panic, and the constant search for new scapegoats to blame when systems crack.
+The modern world is incredibly creative and productive precisely because it unleashes mimetic desire, but it’s also saturated with anxiety, status panic, and the constant search for new scapegoats to blame when systems crack.
 
 Girard vs. Freud, Marx, Nietzsche: Who Is the Real Scapegoat?
 Girard sees Freud, Marx, Nietzsche, and other modern masters of suspicion as having done something important: they all try to unmask hidden mechanisms of domination and repression.
@@ -229,7 +229,7 @@ Marx: the bourgeoisie, capitalists, ruling classes.
 
 Nietzsche: slave morality, ressentiment, the weak who resent the strong.
 
-Each system channels resentment toward a particular guilty group—yet that is precisely what the scapegoat mechanism does. They “unmask” some sacrificial mechanisms while still relying on new victims to explain and resolve conflict.
+Each system channels resentment toward a particular guilty group, yet that is precisely what the scapegoat mechanism does. They “unmask” some sacrificial mechanisms while still relying on new victims to explain and resolve conflict.
 
 Girard’s alternative is more radical: no scapegoats at all. Everyone is implicated in mimetic violence; no group can claim pure innocence over others. That’s a harder, less comforting truth.
 
@@ -240,7 +240,7 @@ The disciple is told, “Imitate me, be like me” (master, parent, mentor).
 
 But when imitation becomes too successful, the model flips: “Don’t rival me, don’t surpass me.”
 
-This generates a contradictory command: “Be like me—but don’t be like me.” The disciple internalizes this conflict and starts to split internally, creating an inner double: a self that admires and a self that hates the model.
+This generates a contradictory command: “Be like me, but don’t be like me.” The disciple internalizes this conflict and starts to split internally, creating an inner double: a self that admires and a self that hates the model.
 
 Girard suggests that:
 
@@ -259,7 +259,7 @@ The subject becomes fixated on the rival’s power to grant or deny access to th
 
 In some cases, the rival fully replaces the original object: the subject’s main focus becomes the same‑sex model–rival.
 
-Girard interprets certain forms of homosexuality this way—as advanced phases of mimetic desire where the model has become the object.
+Girard interprets certain forms of homosexuality this way, as advanced phases of mimetic desire where the model has become the object.
 
 He also notes ritualized homosexuality and cannibalism in some traditional cultures, where the appetite (for sex or food) shifts from an external object to the mimetic partner. For him, that’s another sign that mimesis, not libido in isolation, is the deeper driver.
 
@@ -295,7 +295,7 @@ Seeing how we are drawn to and trapped by rivals and scapegoats.
 
 Refusing both pride (“I am innocent”) and self‑loathing (“I alone am guilty”), and instead acknowledging shared complicity.
 
-Girard argues that this break cannot happen by sheer willpower within the mimetic system itself. It requires a new model who does not rival us—a non‑rivalrous model whose desire does not block but liberates.
+Girard argues that this break cannot happen by sheer willpower within the mimetic system itself. It requires a new model who does not rival us, a non‑rivalrous model whose desire does not block but liberates.
 
 For Girard, that model is the crucified and risen Christ: the innocent victim who exposes scapegoating and offers a pattern of non‑violent, forgiving mimesis. The goal is not to stop imitating, but to imitate differently:
 
@@ -320,7 +320,7 @@ Outrage cycles often follow scapegoat dynamics: complex crises are simplified in
 
 Victim Discourse
 
-Being a victim now carries moral authority, which is good—but it also tempts groups to compete for victim status and to scapegoat others as “oppressors.”
+Being a victim now carries moral authority, which is good, but it also tempts groups to compete for victim status and to scapegoat others as “oppressors.”
 
 Girard helps explain how even “pro‑victim” politics can slide into new forms of persecution.
 
@@ -339,6 +339,4 @@ Where am I in a double bind? Are there people who simultaneously tell you to “
 
 Who is my scapegoat? When life feels chaotic, who do you instinctively think “If they were gone, things would be fine”? That’s your candidate scapegoat. Girard’s warning: this is where illusion is strongest.
 
-Who are my models now? You cannot stop imitating—but you can choose better models: people who do not need you to fail, who do not live by exclusion, who are not obsessed with enemies.
-
-
+Who are my models now? You cannot stop imitating, but you can choose better models: people who do not need you to fail, who do not live by exclusion, who are not obsessed with enemies.

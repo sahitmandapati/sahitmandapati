@@ -4,7 +4,7 @@ my notes on Zig Ziglar's Secrets of Closing the Sale.
 
 
 
-### 1. Selling is helping—not convincing
+### 1. Selling is helping, not convincing
 
 The biggest mindset shift in the book is that great salespeople don't manipulate people.
 
@@ -16,7 +16,7 @@ They:
 
 If your product genuinely improves someone's life, selling becomes an act of service.
 
-> "Close because it's good for the customer—not because you need the commission."
+> "Close because it's good for the customer, not because you need the commission."
 
 ---
 
@@ -426,7 +426,7 @@ If you're building a business, YouTube channel, startup, or personal brand, the 
 3. **Sell outcomes, not features.**
 4. **Use questions to uncover needs instead of making assumptions.**
 5. **Treat objections as valuable feedback, not rejection.**
-6. **Master communication and storytelling—they often matter more than technical expertise.**
+6. **Master communication and storytelling. They often matter more than technical expertise.**
 7. **Aim for repeat relationships and referrals, not just immediate wins.**
 
 Although the book was originally written for traditional salespeople, these psychological principles remain highly relevant for modern founders, consultants, marketers, creators, and anyone whose success depends on persuading others ethically.

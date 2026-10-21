@@ -188,7 +188,10 @@ class ComponentRenderer {
         <div class="writing-card-top"><span>${blog.category}</span><span>${blog.date}</span></div>
         <h3>${blog.title}</h3>
         <p>${blog.description}</p>
-        <button class="text-link blog-read-btn" type="button" data-blog-file="${blog.file}">Read the notes <span>↗</span></button>
+        <div class="blog-card-actions">
+          <button class="text-link blog-read-btn" type="button" data-blog-file="${blog.file}">Read the notes <span>↗</span></button>
+          <button class="text-link blog-share-btn" type="button" data-blog-file="${blog.file}">Copy link</button>
+        </div>
       </article>
     `).join('');
 
@@ -213,11 +216,22 @@ class ComponentRenderer {
         closeButton.addEventListener('click', () => this.closeBlogModal());
       }
 
+      const shareButton = document.querySelector('.blog-modal-share');
+      if (shareButton) {
+        shareButton.addEventListener('click', () => {
+          const blogFile = modal.dataset.blogFile;
+          const blog = this.dataManager.getBlogs().find((entry) => entry.file === blogFile);
+          if (blog) this.copyBlogLink(blog, shareButton);
+        });
+      }
+
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && modal.classList.contains('open')) {
           this.closeBlogModal();
         }
       });
+
+      window.addEventListener('popstate', () => this.syncBlogModalWithUrl());
     }
 
     document.querySelectorAll('.blog-read-btn').forEach((button) => {
@@ -228,6 +242,14 @@ class ComponentRenderer {
         if (blog) {
           this.openBlogModal(blog);
         }
+      });
+    });
+
+    document.querySelectorAll('.blog-share-btn').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const blog = this.dataManager.getBlogs().find((entry) => entry.file === button.dataset.blogFile);
+        if (blog) this.copyBlogLink(blog, button);
       });
     });
 
@@ -251,6 +273,44 @@ class ComponentRenderer {
         }
       });
     });
+
+    this.syncBlogModalWithUrl();
+  }
+
+  getBlogUrl(blog) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('blog', blog.file);
+    return url.toString();
+  }
+
+  async copyBlogLink(blog, button) {
+    const url = this.getBlogUrl(blog);
+    try {
+      await navigator.clipboard.writeText(url);
+      const originalText = button.textContent;
+      button.textContent = 'Link copied!';
+      window.setTimeout(() => {
+        button.textContent = originalText;
+      }, 2000);
+    } catch {
+      window.prompt('Copy this link to share the post:', url);
+    }
+  }
+
+  syncBlogModalWithUrl() {
+    const blogFile = new URL(window.location.href).searchParams.get('blog');
+    const modal = document.getElementById('blogModal');
+    if (!blogFile) {
+      if (modal?.classList.contains('open')) this.closeBlogModal(false);
+      return;
+    }
+
+    const blog = this.dataManager.getBlogs().find((entry) => entry.file === blogFile);
+    if (blog) {
+      this.openBlogModal(blog, false);
+    } else if (modal?.classList.contains('open')) {
+      this.closeBlogModal(false);
+    }
   }
 
   renderMarkdownContent(markdownContent) {
@@ -285,9 +345,13 @@ class ComponentRenderer {
       .replace(/<\/pre><pre>/g, '');
   }
 
-  openBlogModal(blog) {
+  openBlogModal(blog, updateUrl = true) {
     const modal = document.getElementById('blogModal');
     if (!modal) return;
+
+    if (updateUrl && new URL(window.location.href).searchParams.get('blog') !== blog.file) {
+      window.history.pushState({}, '', this.getBlogUrl(blog));
+    }
 
     const titleElement = document.getElementById('blogModalTitle');
     const metaElement = document.getElementById('blogModalMeta');
@@ -297,6 +361,7 @@ class ComponentRenderer {
 
     titleElement.textContent = blog.title;
     metaElement.textContent = `${blog.category} • ${blog.date}`;
+    modal.dataset.blogFile = blog.file;
 
     const markdownContent = blog.content || '';
     bodyElement.innerHTML = this.renderMarkdownContent(markdownContent);
@@ -330,9 +395,17 @@ class ComponentRenderer {
     }
   }
 
-  closeBlogModal() {
+  closeBlogModal(updateUrl = true) {
     const modal = document.getElementById('blogModal');
     if (!modal) return;
+
+    if (updateUrl) {
+      const url = new URL(window.location.href);
+      if (url.searchParams.has('blog')) {
+        url.searchParams.delete('blog');
+        window.history.replaceState({}, '', url);
+      }
+    }
 
     // Move focus out before hiding, or aria-hidden on a focused descendant breaks assistive tech
     if (modal.contains(document.activeElement)) {
