@@ -2,6 +2,19 @@
 class ComponentRenderer {
   constructor(dataManager) {
     this.dataManager = dataManager;
+    this.defaultMetadata = {
+      title: document.title,
+      description: document.querySelector('meta[name="description"]')?.content || '',
+      canonical: document.querySelector('link[rel="canonical"]')?.href || '',
+      openGraph: Object.fromEntries(
+        ['og:type', 'og:title', 'og:description', 'og:url', 'og:image', 'og:image:alt', 'article:author', 'article:section']
+          .map((property) => [property, document.querySelector(`meta[property="${property}"]`)?.content || ''])
+      ),
+      twitter: Object.fromEntries(
+        ['twitter:title', 'twitter:description', 'twitter:image']
+          .map((name) => [name, document.querySelector(`meta[name="${name}"]`)?.content || ''])
+      )
+    };
   }
 
   // Helper function to format date
@@ -267,8 +280,144 @@ class ComponentRenderer {
 
   getBlogUrl(blog) {
     const url = new URL(window.location.href);
-    url.searchParams.set('blog', blog.file);
+    const pathSegments = url.pathname.split('/').filter(Boolean);
+    const blogPathIndex = pathSegments.indexOf('thegoldenpath');
+    const basePath = blogPathIndex === -1
+      ? pathSegments
+      : pathSegments.slice(0, blogPathIndex);
+    url.pathname = `/${[...basePath, 'thegoldenpath', this.getBlogSlug(blog)].join('/')}`;
+    url.search = '';
+    url.hash = '';
     return url.toString();
+  }
+
+  getBlogSlug(blog) {
+    return blog.file
+      .replace(/\.md$/i, '')
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+  }
+
+  getBlogFromUrl() {
+    const url = new URL(window.location.href);
+    const blogFile = url.searchParams.get('blog');
+    if (blogFile) {
+      return this.dataManager.getBlogs().find((blog) => blog.file === blogFile);
+    }
+
+    const pathSegments = url.pathname.split('/').filter(Boolean);
+    const blogPathIndex = pathSegments.indexOf('thegoldenpath');
+    const blogSlug = url.searchParams.get('blogSlug')
+      || (blogPathIndex === -1 ? null : pathSegments[blogPathIndex + 1]);
+    return blogSlug
+      ? this.dataManager.getBlogs().find((blog) => this.getBlogSlug(blog) === blogSlug)
+      : null;
+  }
+
+  getBlogPublishedDate(date) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(date)) return date;
+    const match = date.match(/^(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]+)\s+(\d{4})$/);
+    if (!match) return null;
+    const months = {
+      jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
+      jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
+    };
+    const month = months[match[2].slice(0, 3).toLowerCase()];
+    return month ? `${match[3]}-${month}-${match[1].padStart(2, '0')}` : null;
+  }
+
+  updateBlogMetadata(blog) {
+    const url = this.getBlogUrl(blog);
+    const image = new URL('data/assets/sahit_profile.png', this.defaultMetadata.canonical).href;
+    const description = blog.description || 'Read the latest notes on thegoldenpath.';
+    const publishedDate = this.getBlogPublishedDate(blog.date);
+    const updateMeta = (attribute, key, content) => {
+      let element = document.querySelector(`meta[${attribute}="${key}"]`);
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+      element.content = content;
+    };
+
+    document.title = `${blog.title} | thegoldenpath`;
+    updateMeta('name', 'description', description);
+    updateMeta('property', 'og:type', 'article');
+    updateMeta('property', 'og:site_name', 'thegoldenpath');
+    updateMeta('property', 'og:title', document.title);
+    updateMeta('property', 'og:description', description);
+    updateMeta('property', 'og:url', url);
+    updateMeta('property', 'og:image', image);
+    updateMeta('property', 'og:image:alt', 'Sahit Mandapati, author of thegoldenpath');
+    updateMeta('property', 'article:author', 'Sahit Mandapati');
+    updateMeta('property', 'article:section', blog.category);
+    updateMeta('name', 'twitter:title', document.title);
+    updateMeta('name', 'twitter:description', description);
+    updateMeta('name', 'twitter:image', image);
+
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.href = url;
+
+    let publishedTime = document.querySelector('meta[property="article:published_time"]');
+    if (publishedDate) {
+      if (!publishedTime) {
+        publishedTime = document.createElement('meta');
+        publishedTime.setAttribute('property', 'article:published_time');
+        document.head.appendChild(publishedTime);
+      }
+      publishedTime.content = publishedDate;
+    } else {
+      publishedTime?.remove();
+    }
+
+    let structuredData = document.getElementById('blogStructuredData');
+    if (!structuredData) {
+      structuredData = document.createElement('script');
+      structuredData.id = 'blogStructuredData';
+      structuredData.type = 'application/ld+json';
+      document.head.appendChild(structuredData);
+    }
+    structuredData.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: blog.title,
+      description,
+      image,
+      url,
+      mainEntityOfPage: url,
+      author: { '@type': 'Person', name: 'Sahit Mandapati', url: this.defaultMetadata.canonical },
+      publisher: { '@type': 'Person', name: 'Sahit Mandapati', url: this.defaultMetadata.canonical },
+      articleSection: blog.category,
+      inLanguage: 'en',
+      ...(publishedDate ? { datePublished: publishedDate } : {})
+    }).replace(/</g, '\\u003c');
+  }
+
+  restoreSiteMetadata() {
+    const restoreMeta = (attribute, values) => {
+      Object.entries(values).forEach(([key, content]) => {
+        const element = document.querySelector(`meta[${attribute}="${key}"]`);
+        if (content) {
+          if (element) element.content = content;
+        } else {
+          element?.remove();
+        }
+      });
+    };
+
+    document.title = this.defaultMetadata.title;
+    const description = document.querySelector('meta[name="description"]');
+    if (description) description.content = this.defaultMetadata.description;
+    restoreMeta('property', this.defaultMetadata.openGraph);
+    restoreMeta('name', this.defaultMetadata.twitter);
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.href = this.defaultMetadata.canonical;
+    document.querySelector('meta[property="article:published_time"]')?.remove();
+    document.getElementById('blogStructuredData')?.remove();
   }
 
   async copyBlogLink(blog, button) {
@@ -286,19 +435,18 @@ class ComponentRenderer {
   }
 
   syncBlogPageWithUrl() {
-    const blogFile = new URL(window.location.href).searchParams.get('blog');
     const page = document.getElementById('blogPage');
-    if (!blogFile) {
+    const blog = this.getBlogFromUrl();
+    if (!blog) {
       if (page && !page.hidden) this.closeBlogPage(false);
       return;
     }
 
-    const blog = this.dataManager.getBlogs().find((entry) => entry.file === blogFile);
-    if (blog) {
-      this.openBlogPage(blog, false);
-    } else if (page && !page.hidden) {
-      this.closeBlogPage(false);
+    const url = new URL(window.location.href);
+    if (url.pathname !== new URL(this.getBlogUrl(blog)).pathname || url.search) {
+      window.history.replaceState({}, '', this.getBlogUrl(blog));
     }
+    this.openBlogPage(blog, false);
   }
 
   renderMarkdownContent(markdownContent) {
@@ -337,7 +485,7 @@ class ComponentRenderer {
     const page = document.getElementById('blogPage');
     if (!page) return;
 
-    if (updateUrl && new URL(window.location.href).searchParams.get('blog') !== blog.file) {
+    if (updateUrl && this.getBlogFromUrl()?.file !== blog.file) {
       window.history.pushState({}, '', this.getBlogUrl(blog));
     }
 
@@ -348,7 +496,7 @@ class ComponentRenderer {
     if (!titleElement || !metaElement || !bodyElement) return;
 
     titleElement.textContent = blog.title;
-    metaElement.textContent = `${blog.category} • ${blog.date}`;
+    metaElement.textContent = `By Sahit Mandapati · ${blog.category} · ${blog.date}`;
     page.dataset.blogFile = blog.file;
 
     const markdownContent = blog.content || '';
@@ -361,7 +509,7 @@ class ComponentRenderer {
 
     page.hidden = false;
     document.body.classList.add('blog-page-open');
-    document.title = `${blog.title} | Sahit Mandapati`;
+    this.updateBlogMetadata(blog);
     window.scrollTo(0, 0);
   }
 
@@ -371,15 +519,20 @@ class ComponentRenderer {
 
     if (updateUrl) {
       const url = new URL(window.location.href);
-      if (url.searchParams.has('blog')) {
-        url.searchParams.delete('blog');
-        window.history.replaceState({}, '', url);
-      }
+      const pathSegments = url.pathname.split('/').filter(Boolean);
+      const blogPathIndex = pathSegments.indexOf('thegoldenpath');
+      const basePath = blogPathIndex === -1
+        ? pathSegments
+        : pathSegments.slice(0, blogPathIndex);
+      url.pathname = `/${basePath.join('/')}${basePath.length ? '/' : ''}`;
+      url.search = '';
+      url.hash = '#writing';
+      window.history.replaceState({}, '', url);
     }
 
     page.hidden = true;
     document.body.classList.remove('blog-page-open');
-    document.title = 'Sahit Mandapati';
+    this.restoreSiteMetadata();
     document.getElementById('writing')?.scrollIntoView({ behavior: 'smooth' });
   }
 

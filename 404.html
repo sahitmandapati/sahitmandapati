@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opening blog post</title>
+</head>
+<body>
+  <p>Opening blog post…</p>
+  <script>
+    const segments = window.location.pathname.split('/').filter(Boolean);
+    const blogPathIndex = segments.indexOf('thegoldenpath');
+    const blogSlug = segments[blogPathIndex + 1];
+
+    if (blogPathIndex === -1 || !blogSlug) {
+      document.querySelector('p').textContent = 'This page could not be found.';
+    } else {
+      const baseSegments = segments.slice(0, blogPathIndex);
+      const basePath = baseSegments.length ? `/${baseSegments.join('/')}` : '';
+      const url = new URL(`${basePath}/`, window.location.origin);
+      url.searchParams.set('blogSlug', blogSlug);
+      window.location.replace(url);
+    }
+  </script>
+</body>
+</html>

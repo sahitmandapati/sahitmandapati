@@ -139,7 +139,7 @@ class DataManager {
     content = this.stripDuplicateTitle(content, title);
     const description = frontMatter.description || this.extractMarkdownDescription(content) || 'Read the full note.';
     const category = frontMatter.category || 'Notes';
-    const date = frontMatter.date || 'Updated recently';
+    const date = frontMatter.date || '28th Oct 2026';
 
     return {
       id: `${fileName}`,

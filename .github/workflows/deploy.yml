@@ -26,9 +26,11 @@ jobs:
         with:
           node-version: 20
 
-      # Regenerates data/blogs/index.json from whatever .md files exist in the folder.
-      - name: Generate blog index
-        run: node scripts/generate-blog-index.mjs
+      - name: Prepare site and generate blog SEO pages
+        run: |
+          mkdir -p "$RUNNER_TEMP/site"
+          git archive HEAD | tar -x -C "$RUNNER_TEMP/site"
+          node scripts/generate-blog-index.mjs --output-dir "$RUNNER_TEMP/site"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -36,7 +38,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: ${{ runner.temp }}/site
 
   deploy:
     environment:

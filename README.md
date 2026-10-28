@@ -15,6 +15,7 @@ The website is a static single-page portfolio built using:
 The content is loaded dynamically from the `data/` folder and rendered into the page using JavaScript. This makes it easy to update personal information without changing the page structure.
 
 Blog posts are automatically discovered from the `data/blogs/` folder. Any new `.md` file dropped into that folder will appear in the Writing section without additional configuration.
+The deployment workflow generates a static, search-optimized page for every post, includes those URLs in the sitemap, and GitHub Pages serves each page directly. The root `404.html` remains a fallback for older or invalid blog paths.
 
 ## Features
 
@@ -24,7 +25,7 @@ Blog posts are automatically discovered from the `data/blogs/` folder. Any new `
 - Work experience timeline
 - Featured projects section
 - Writing and notes section
-- Full-page article views with shareable links to individual posts
+- Full-page article views with shareable `/thegoldenpath/<post-slug>` links
 - Books section
 - Certifications section
 - Contact section with social links
